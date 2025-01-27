@@ -2,8 +2,8 @@
 
 namespace hisorange\BrowserDetect;
 
+use hisorange\BrowserDetect\Contracts\StageInterface;
 use Illuminate\Http\Request;
-use League\Pipeline\Pipeline;
 use Illuminate\Cache\CacheManager;
 use hisorange\BrowserDetect\Contracts\ParserInterface;
 use hisorange\BrowserDetect\Contracts\ResultInterface;
@@ -201,12 +201,20 @@ final class Parser implements ParserInterface
      */
     protected function process(string $agent): ResultInterface
     {
-        return (new Pipeline())
-            ->pipe(new Stages\UAParser())
-            ->pipe(new Stages\MobileDetect())
-            ->pipe(new Stages\CrawlerDetect())
-            ->pipe(new Stages\DeviceDetector())
-            ->pipe(new Stages\BrowserDetect())
-            ->process(new Payload($agent));
+		$pipeline = [
+			new Stages\UAParser(),
+			new Stages\MobileDetect(),
+			new Stages\CrawlerDetect(),
+			new Stages\DeviceDetector(),
+			new Stages\BrowserDetect()
+		];
+
+		$payload = array_reduce(
+			$pipeline,
+			fn(Payload $carry, StageInterface $stage) => $stage($carry),
+			new Payload($agent)
+		);
+
+		return new Result($payload->toArray());
     }
 }

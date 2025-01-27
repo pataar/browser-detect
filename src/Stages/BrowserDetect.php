@@ -16,9 +16,9 @@ class BrowserDetect implements StageInterface
 {
     /**
      * @param  PayloadInterface $payload
-     * @return ResultInterface
+     * @return PayloadInterface
      */
-    public function __invoke(PayloadInterface $payload): ResultInterface
+    public function __invoke(PayloadInterface $payload): PayloadInterface
     {
         // Fix issue when the device is detected at tablet and mobile in the same time.
         if (!$payload->getValue('isMobile') && !$payload->getValue('isTablet')) {
@@ -132,7 +132,7 @@ class BrowserDetect implements StageInterface
         # Request: https://github.com/hisorange/browser-detect/issues/156
         $payload->setValue('isInApp', $this->detectIsInApp($payload));
 
-        return new Result($payload->toArray());
+        return $payload;
     }
 
     /**

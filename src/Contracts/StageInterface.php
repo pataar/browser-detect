@@ -8,7 +8,7 @@ interface StageInterface
      * Process the payload.
      *
      * @param  PayloadInterface $payload
-     * @return mixed
+     * @return PayloadInterface
      */
-    public function __invoke(PayloadInterface $payload);
+    public function __invoke(PayloadInterface $payload): PayloadInterface;
 }
