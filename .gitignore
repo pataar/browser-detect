@@ -9,3 +9,4 @@ demo/cache
 phpstan.neon export-ignore
 phpunit.xml export-ignore
 composer.lock
+build/
