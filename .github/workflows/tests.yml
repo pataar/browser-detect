@@ -59,6 +59,7 @@ jobs:
         run: composer run-script test
 
       - name: Coveralls
+        if: matrix.laravel-version != '9.*'
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: php vendor/bin/php-coveralls -v --coverage_clover=build/logs/clover.xml
