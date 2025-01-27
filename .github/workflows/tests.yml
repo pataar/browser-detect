@@ -17,11 +17,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: [8.2, 8.3]
+        php-version: [8.2, 8.3, 8.4]
         laravel-version:
           [
             "9.*", # Test Laravel 9
-            "10.*", # Test latest version
+            "10.*", # Test Laravel 10
+            "11.*", # Test  Laravel 11
           ]
     steps:
       - uses: actions/checkout@v3
