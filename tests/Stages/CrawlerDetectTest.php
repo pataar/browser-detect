@@ -13,7 +13,7 @@ use hisorange\BrowserDetect\Stages\CrawlerDetect;
  * @package            hisorange\BrowserDetect\Test\Stages
  * @coversDefaultClass hisorange\BrowserDetect\Stages\CrawlerDetect
  */
-class CrawlerDetectTest extends TestCase
+final class CrawlerDetectTest extends TestCase
 {
     /**
      * @covers ::__invoke()

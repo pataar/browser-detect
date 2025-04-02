@@ -13,7 +13,7 @@ use hisorange\BrowserDetect\Stages\MobileDetect;
  * @package            hisorange\BrowserDetect\Test\Stages
  * @coversDefaultClass hisorange\BrowserDetect\Stages\MobileDetect
  */
-class MobileDetectTest extends TestCase
+final class MobileDetectTest extends TestCase
 {
     /**
      * @covers ::__invoke()

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Blade;
  * @package hisorange\BrowserDetect\Test
  * @coversDefaultClass \hisorange\BrowserDetect\ServiceProvider
  */
-class BladeTest extends TestCase
+final class BladeTest extends TestCase
 {
     /**
      * @return array

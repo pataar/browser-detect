@@ -8,7 +8,7 @@ use hisorange\BrowserDetect\Contracts\ParserInterface;
  * @package            hisorange\BrowserDetect\Test
  * @coversDefaultClass hisorange\BrowserDetect\ServiceProvider
  */
-class ServiceProviderTest extends TestCase
+final class ServiceProviderTest extends TestCase
 {
     /**
      * @covers ::register()

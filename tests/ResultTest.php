@@ -10,7 +10,7 @@ use hisorange\BrowserDetect\Contracts\ResultInterface;
  * @package            hisorange\BrowserDetect\Test
  * @coversDefaultClass hisorange\BrowserDetect\Result
  */
-class ResultTest extends TestCase
+final class ResultTest extends TestCase
 {
     /**
      * @throws \PHPUnit_Framework_Exception

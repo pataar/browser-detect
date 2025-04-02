@@ -13,7 +13,7 @@ use hisorange\BrowserDetect\Stages\DeviceDetector;
  * @package            hisorange\BrowserDetect\Test\Stages
  * @coversDefaultClass hisorange\BrowserDetect\Stages\DeviceDetector
  */
-class DeviceDetectorTest extends TestCase
+final class DeviceDetectorTest extends TestCase
 {
     /**
      * @covers ::__invoke()

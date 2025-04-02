@@ -12,7 +12,7 @@ use hisorange\BrowserDetect\Contracts\ResultInterface;
  * @package            hisorange\BrowserDetect\Test
  * @coversDefaultClass hisorange\BrowserDetect\Parser
  */
-class ParserTest extends TestCase
+final class ParserTest extends TestCase
 {
     /**
      * @covers ::detect()

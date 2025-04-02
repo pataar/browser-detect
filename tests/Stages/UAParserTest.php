@@ -13,7 +13,7 @@ use hisorange\BrowserDetect\Stages\UAParser;
  * @package            hisorange\BrowserDetect\Test\Stages
  * @coversDefaultClass hisorange\BrowserDetect\Stages\UAParser
  */
-class UAParserTest extends TestCase
+final class UAParserTest extends TestCase
 {
     /**
      * @covers ::__invoke()

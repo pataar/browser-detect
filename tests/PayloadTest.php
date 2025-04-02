@@ -8,7 +8,7 @@ use hisorange\BrowserDetect\Payload;
  * @package            hisorange\BrowserDetect\Test
  * @coversDefaultClass hisorange\BrowserDetect\Payload
  */
-class PayloadTest extends TestCase
+final class PayloadTest extends TestCase
 {
     /**
      * @covers ::__construct()

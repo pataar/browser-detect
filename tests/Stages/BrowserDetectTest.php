@@ -17,7 +17,7 @@ use SebastianBergmann\RecursionContext\InvalidArgumentException;
  * @package            hisorange\BrowserDetect\Test\Stages
  * @coversDefaultClass hisorange\BrowserDetect\Stages\BrowserDetect
  */
-class BrowserDetectTest extends TestCase
+final class BrowserDetectTest extends TestCase
 {
     /**
      * @covers ::__invoke()

@@ -8,7 +8,7 @@ use hisorange\BrowserDetect\Contracts\ParserInterface;
  * Class FacadeTest
  * @package            hisorange\BrowserDetect\Test
  */
-class FacadeTest extends TestCase
+final class FacadeTest extends TestCase
 {
     /**
      * @covers \hisorange\BrowserDetect\Facade
