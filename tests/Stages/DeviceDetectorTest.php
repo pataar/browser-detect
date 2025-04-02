@@ -22,7 +22,7 @@ class DeviceDetectorTest extends TestCase
      * @param array  $changes
      */
     #[DataProvider('provideAgents')]
-    public function testInvoke($agent, $changes)
+    public function testInvoke($agent, $changes): void
     {
         $stage  = new DeviceDetector;
         $result = new Payload($agent);
@@ -39,7 +39,7 @@ class DeviceDetectorTest extends TestCase
      *
      * @return array
      */
-    public static function provideAgents()
+    public static function provideAgents(): array
     {
         return [
 

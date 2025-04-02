@@ -16,7 +16,7 @@ class ResultTest extends TestCase
      * @throws \PHPUnit_Framework_Exception
      * @throws \PHPUnit\Framework\Exception
      */
-    public function testInterfaceImplementation()
+    public function testInterfaceImplementation(): void
     {
         $this->assertInstanceOf(ResultInterface::class, new Result([]));
     }
@@ -24,7 +24,7 @@ class ResultTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $result = new Result(['userAgent' => 'test']);
 
@@ -34,7 +34,7 @@ class ResultTest extends TestCase
     /**
      * @covers ::toArray()
      */
-    public function testToArray()
+    public function testToArray(): void
     {
         $actual   = $this->getEmptyResult()->toArray();
         $expected = [
@@ -116,7 +116,7 @@ class ResultTest extends TestCase
      * @covers ::deviceFamily()
      * @covers ::deviceModel()
      */
-    public function testUserAgent()
+    public function testUserAgent(): void
     {
         $keys   = $this->getKeys();
         $value  = 'valueType';
@@ -199,7 +199,7 @@ class ResultTest extends TestCase
      * @throws \PHPUnit\Framework\AssertionFailedError
      * @throws \PHPUnit_Framework_AssertionFailedError
      */
-    public function testIEVersion()
+    public function testIEVersion(): void
     {
         $result = new Result([
             'isIE'           => true,
@@ -212,7 +212,7 @@ class ResultTest extends TestCase
         $this->assertFalse($result->isIEVersion(7, '>'));
     }
 
-    public function testJsonOutput()
+    public function testJsonOutput(): void
     {
         $parser = $this->app->make('browser-detect');
         $agent  = 'Mozilla/5.0(iPad; U; CPU iPhone OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B314 Safari/531.21.';
@@ -223,7 +223,7 @@ class ResultTest extends TestCase
         $this->assertSame($keys, $this->getKeys());
     }
 
-    public function testChromeFamily()
+    public function testChromeFamily(): void
     {
         $parser = $this->app->make('browser-detect');
         $agent  = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36';
@@ -237,7 +237,7 @@ class ResultTest extends TestCase
         $this->assertSame($result->isEdge(), false);
     }
 
-    public function testFirefoxFamily()
+    public function testFirefoxFamily(): void
     {
         $parser = $this->app->make('browser-detect');
         $agent  = 'Mozilla/5.0 (X11; Linux i686; rv:64.0) Gecko/20100101 Firefox/64.0';
@@ -251,7 +251,7 @@ class ResultTest extends TestCase
         $this->assertSame($result->isEdge(), false);
     }
 
-    public function testOperaFamily()
+    public function testOperaFamily(): void
     {
         $parser = $this->app->make('browser-detect');
         $agent  = 'Opera/9.80 (Macintosh; Intel Mac OS X 10.14.1) Presto/2.12.388 Version/12.16';
@@ -265,7 +265,7 @@ class ResultTest extends TestCase
         $this->assertSame($result->isEdge(), false);
     }
 
-    public function testSafariFamily()
+    public function testSafariFamily(): void
     {
         $parser = $this->app->make('browser-detect');
         $agent  = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/7046A194A';
@@ -279,7 +279,7 @@ class ResultTest extends TestCase
         $this->assertSame($result->isEdge(), false);
     }
 
-    public function testIEFamily()
+    public function testIEFamily(): void
     {
         $parser = $this->app->make('browser-detect');
         $agent  = 'Mozilla/5.0 (compatible, MSIE 11, Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko';
@@ -293,7 +293,7 @@ class ResultTest extends TestCase
         $this->assertSame($result->isEdge(), false);
     }
 
-    public function testEdgeFamily()
+    public function testEdgeFamily(): void
     {
         $parser = $this->app->make('browser-detect');
         $agent  = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML like Gecko) Chrome/51.0.2704.79 Safari/537.36 Edge/14.14931';
@@ -306,7 +306,7 @@ class ResultTest extends TestCase
         $this->assertSame($result->isEdge(), true);
     }
 
-    public function testSamsungBrowser()
+    public function testSamsungBrowser(): void
     {
         $parser = $this->app->make('browser-detect');
         $agent  = 'Mozilla/5.0 (Linux; Android 9; SAMSUNG SM-G960U) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/10.2 Chrome/71.0.3578.99 Mobile Safari/537.36';
@@ -315,7 +315,7 @@ class ResultTest extends TestCase
         $this->assertSame($result->isMobile(), true);
     }
 
-    public function testWindows()
+    public function testWindows(): void
     {
         $parser = $this->app->make('browser-detect');
         $agent  = 'Mozilla/5.0 (Windows NT 5.1; rv:11.0) Gecko Firefox/11.0 (via ggpht.com GoogleImageProxy)';
@@ -326,7 +326,7 @@ class ResultTest extends TestCase
         $this->assertSame($result->isWindows(), true);
     }
 
-    public function testIOS()
+    public function testIOS(): void
     {
         $parser = $this->app->make('browser-detect');
         $agent  = 'Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148';
@@ -337,7 +337,7 @@ class ResultTest extends TestCase
         $this->assertSame($result->isMac(), true);
     }
 
-    public function testMac()
+    public function testMac(): void
     {
         $parser = $this->app->make('browser-detect');
         $agent  = 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_6; en-en) AppleWebKit/533.19.4 (KHTML, like Gecko) Version/5.0.3 Safari/533.19.4';
@@ -348,7 +348,7 @@ class ResultTest extends TestCase
         $this->assertSame($result->isMac(), true);
     }
 
-    public function testAndroid()
+    public function testAndroid(): void
     {
         $parser = $this->app->make('browser-detect');
         $agent  = 'Mozilla/5.0 (Linux; U; Android 2.2) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1';
@@ -359,7 +359,7 @@ class ResultTest extends TestCase
         $this->assertSame($result->isAndroid(), true);
     }
 
-    public function testLinux()
+    public function testLinux(): void
     {
         $parser = $this->app->make('browser-detect');
         $agent  = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36';

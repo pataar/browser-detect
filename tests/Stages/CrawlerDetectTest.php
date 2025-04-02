@@ -21,7 +21,7 @@ class CrawlerDetectTest extends TestCase
      * @param bool   $expected
      */
     #[DataProvider('provideAgents')]
-    public function testInvoke($agent, $expected)
+    public function testInvoke($agent, $expected): void
     {
         $stage  = new CrawlerDetect;
         $result = new Payload($agent);
@@ -36,7 +36,7 @@ class CrawlerDetectTest extends TestCase
      *
      * @return array
      */
-    public static function provideAgents()
+    public static function provideAgents(): array
     {
         return [
             ['NotGoingToMatch', false],

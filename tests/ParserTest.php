@@ -21,7 +21,7 @@ class ParserTest extends TestCase
      * @throws \PHPUnit_Framework_Exception
      * @throws \PHPUnit\Framework\Exception
      */
-    public function testDetect()
+    public function testDetect(): void
     {
         $parser   = $this->getParser();
         $actual   = $parser->detect();
@@ -33,7 +33,7 @@ class ParserTest extends TestCase
     /**
      * @covers ::config()
      */
-    public function testConfigMerge()
+    public function testConfigMerge(): void
     {
         $i = new Parser(null, null, [
             'cache' => [
@@ -49,7 +49,7 @@ class ParserTest extends TestCase
      * @covers ::__construct()
      * @covers ::parse()
      */
-    public function testStandaloneConstruct()
+    public function testStandaloneConstruct(): void
     {
         $this->assertInstanceOf(ResultInterface::class, (new Parser())->parse('test'));
     }
@@ -58,7 +58,7 @@ class ParserTest extends TestCase
      * @covers ::__callStatic()
      * @covers ::getUserAgentString()
      */
-    public function testStandaloneFacade()
+    public function testStandaloneFacade(): void
     {
         $this->assertSame(Parser::isMobile(), false);
     }
@@ -66,7 +66,7 @@ class ParserTest extends TestCase
     /**
      * Check if the results are the same.
      */
-    public function testStandaloneResult()
+    public function testStandaloneResult(): void
     {
         $this->assertSame(Parser::toArray(), $this->getParser()->parse('')->toArray());
     }
@@ -74,7 +74,7 @@ class ParserTest extends TestCase
     /**
      * @covers ::parse()
      */
-    public function testStandaloneRuntimeCache()
+    public function testStandaloneRuntimeCache(): void
     {
         $this->assertSame(Parser::toArray(), Parser::toArray());
     }
@@ -98,7 +98,7 @@ class ParserTest extends TestCase
      * @throws \PHPUnit\Framework\Exception
      */
     #[DataProvider('provideAgents')]
-    public function testParse($agent)
+    public function testParse($agent): void
     {
         $parser   = $this->getParser();
         $actual   = $parser->parse($agent);
@@ -110,7 +110,7 @@ class ParserTest extends TestCase
     /**
      * @return array
      */
-    public static function provideAgents()
+    public static function provideAgents(): array
     {
         return [
             ['Unknown'],
@@ -128,7 +128,7 @@ class ParserTest extends TestCase
      * @throws \PHPUnit\Framework\AssertionFailedError
      * @throws \PHPUnit_Framework_AssertionFailedError
      */
-    public function testCall()
+    public function testCall(): void
     {
         $this->assertNotEmpty($this->getParser()->userAgent());
     }
@@ -136,7 +136,7 @@ class ParserTest extends TestCase
     /**
      * @covers ::__call()
      */
-    public function testCallException()
+    public function testCallException(): void
     {
         $this->expectException(\hisorange\BrowserDetect\Exceptions\BadMethodCallException::class);
         $this->getParser()->BadMethod();

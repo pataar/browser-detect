@@ -27,7 +27,7 @@ class BrowserDetectTest extends TestCase
      * @throws \PHPUnit_Framework_Exception
      */
     #[DataProvider('provideScenarios')]
-    public function testInvoke($scenario, $expectations)
+    public function testInvoke($scenario, $expectations): void
     {
         $stage  = new BrowserDetect;
         $payload = new Payload('Unknown');
@@ -51,7 +51,7 @@ class BrowserDetectTest extends TestCase
      *
      * @return void
      */
-    public function testPrerenderBot()
+    public function testPrerenderBot(): void
     {
         $stage  = new BrowserDetect;
         $payload = new Payload('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/W.X.Y.Z Safari/537.36 Prerender (+https://github.com/prerender/prerender)');
@@ -70,7 +70,7 @@ class BrowserDetectTest extends TestCase
      *
      * @return void
      */
-    public function testPrerenderMobileBot()
+    public function testPrerenderMobileBot(): void
     {
         $stage  = new BrowserDetect;
         $payload = new Payload('Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko)' .
@@ -92,7 +92,7 @@ class BrowserDetectTest extends TestCase
      * @throws ExpectationFailedException
      * @throws InvalidArgumentException
      */
-    public function testInAppWebView()
+    public function testInAppWebView(): void
     {
         $stage  = new BrowserDetect;
         $payload = new Payload('WebView');
@@ -128,7 +128,7 @@ class BrowserDetectTest extends TestCase
      * @throws ExpectationFailedException
      * @throws InvalidArgumentException
      */
-    public function testInAppApple()
+    public function testInAppApple(): void
     {
         $stage  = new BrowserDetect;
         $payload = new Payload('Mozilla/5.0 (iPhone; CPU iPhone OS 9_3_5 like Mac OS X) ' .
@@ -145,7 +145,7 @@ class BrowserDetectTest extends TestCase
      * @throws ExpectationFailedException
      * @throws InvalidArgumentException
      */
-    public function testInAppAndroid()
+    public function testInAppAndroid(): void
     {
         $stage  = new BrowserDetect;
         $payload = new Payload('Mozilla/5.0 (Linux; Android 5.1.1; Nexus 5 Build/LMY48B; wv) ' .
@@ -160,7 +160,7 @@ class BrowserDetectTest extends TestCase
      *
      * @return array
      */
-    public static function provideScenarios()
+    public static function provideScenarios(): array
     {
         return [
             [

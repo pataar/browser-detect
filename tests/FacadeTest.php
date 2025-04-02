@@ -17,7 +17,7 @@ class FacadeTest extends TestCase
      * @throws \PHPUnit_Framework_Exception
      * @throws \PHPUnit\Framework\Exception
      */
-    public function testResolve()
+    public function testResolve(): void
     {
         $this->assertTrue(class_exists('Browser'));
 

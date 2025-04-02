@@ -22,7 +22,7 @@ class UAParserTest extends TestCase
      * @throws \UAParser\Exception\FileNotFoundException
      */
     #[DataProvider('provideAgent')]
-    public function testInvoke($agent, $changes)
+    public function testInvoke($agent, $changes): void
     {
         $stage  = new UAParser;
         $result = new Payload($agent);
@@ -39,7 +39,7 @@ class UAParserTest extends TestCase
      *
      * @return array
      */
-    public static function provideAgent()
+    public static function provideAgent(): array
     {
         return [
             [

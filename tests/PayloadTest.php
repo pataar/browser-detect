@@ -14,7 +14,7 @@ class PayloadTest extends TestCase
      * @covers ::__construct()
      * @covers ::getAgent()
      */
-    public function testGetAgent()
+    public function testGetAgent(): void
     {
         $payload = new Payload('test');
         $this->assertSame('test', $payload->getAgent());
@@ -25,7 +25,7 @@ class PayloadTest extends TestCase
      * @covers ::setValue()
      * @covers ::toArray()
      */
-    public function testApi()
+    public function testApi(): void
     {
         $payload = new Payload('test');
         $payload->setValue('a', 'b');

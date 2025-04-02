@@ -16,7 +16,7 @@ class BladeTest extends TestCase
     /**
      * @return array
      */
-    public static function directiveProvider()
+    public static function directiveProvider(): array
     {
         return [['mobile'], ['desktop'], ['tablet']];
     }
@@ -26,7 +26,7 @@ class BladeTest extends TestCase
      * @covers       ::registerDirectives()
      */
     #[DataProvider('directiveProvider')]
-    public function testDirectives($directive)
+    public function testDirectives($directive): void
     {
         $actual   = Blade::compileString('@' . $directive . ' Ok @end' . $directive);
         $expected = "<?php if (\Illuminate\Support\Facades\Blade::check('$directive')): ?> Ok <?php endif; ?>";
@@ -37,7 +37,7 @@ class BladeTest extends TestCase
     /**
      * @return array
      */
-    public static function directiveValuedProvider()
+    public static function directiveValuedProvider(): array
     {
         return [['mobile', false], ['desktop', true], ['tablet', false]];
     }
@@ -47,7 +47,7 @@ class BladeTest extends TestCase
      * @covers       ::registerDirectives()
      */
     #[DataProvider('directiveValuedProvider')]
-    public function testCheckingDirectives($directive, $expected)
+    public function testCheckingDirectives($directive, $expected): void
     {
         $this->assertSame($expected, Blade::check($directive));
     }
@@ -56,7 +56,7 @@ class BladeTest extends TestCase
      * @param string $directive
      * @covers       ::registerDirectives()
      */
-    public function testBrowserDirectiveResult()
+    public function testBrowserDirectiveResult(): void
     {
         $this->assertSame(true, Blade::check('browser', 'isDesktop'));
         $this->assertSame(false, Blade::check('browser', 'ISMOBILE'));
@@ -65,7 +65,7 @@ class BladeTest extends TestCase
     /**
      * @covers ::registerDirectives()
      */
-    public function testBrowserDirective()
+    public function testBrowserDirective(): void
     {
         $actual   = Blade::compileString('@browser("isMobile") Ok @endbrowser');
         $expected = '<?php if (\Illuminate\Support\Facades\Blade::check(\'browser\', "isMobile")): ?> Ok <?php endif; ?>';

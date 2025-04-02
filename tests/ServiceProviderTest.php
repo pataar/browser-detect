@@ -16,7 +16,7 @@ class ServiceProviderTest extends TestCase
      * @throws \PHPUnit_Framework_Exception
      * @throws \PHPUnit\Framework\Exception
      */
-    public function testRegister()
+    public function testRegister(): void
     {
         $expected = ParserInterface::class;
         $actual   = $this->app->make('browser-detect');
