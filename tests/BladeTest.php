@@ -2,6 +2,7 @@
 
 namespace hisorange\BrowserDetect\Test;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Illuminate\Support\Facades\Blade;
 
 /**
@@ -21,10 +22,10 @@ class BladeTest extends TestCase
     }
 
     /**
-     * @dataProvider directiveProvider
      * @param string $directive
      * @covers       ::registerDirectives()
      */
+    #[DataProvider('directiveProvider')]
     public function testDirectives($directive)
     {
         $actual   = Blade::compileString('@' . $directive . ' Ok @end' . $directive);
@@ -42,10 +43,10 @@ class BladeTest extends TestCase
     }
 
     /**
-     * @dataProvider directiveValuedProvider
      * @param string $directive
      * @covers       ::registerDirectives()
      */
+    #[DataProvider('directiveValuedProvider')]
     public function testCheckingDirectives($directive, $expected)
     {
         $this->assertSame($expected, Blade::check($directive));

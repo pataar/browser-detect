@@ -2,6 +2,7 @@
 
 namespace hisorange\BrowserDetect\Test\Stages;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use hisorange\BrowserDetect\Payload;
 use hisorange\BrowserDetect\Result;
 use hisorange\BrowserDetect\Test\TestCase;
@@ -19,16 +20,13 @@ use SebastianBergmann\RecursionContext\InvalidArgumentException;
 class BrowserDetectTest extends TestCase
 {
     /**
-     * @dataProvider provideScenarios
-     *
      * @covers ::__invoke()
-     *
      * @param array $scenario
      * @param array $expectations
-     *
      * @throws \PHPUnit\Framework\Exception
      * @throws \PHPUnit_Framework_Exception
      */
+    #[DataProvider('provideScenarios')]
     public function testInvoke($scenario, $expectations)
     {
         $stage  = new BrowserDetect;

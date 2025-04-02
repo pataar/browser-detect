@@ -2,6 +2,7 @@
 
 namespace hisorange\BrowserDetect\Test\Stages;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use hisorange\BrowserDetect\Payload;
 use hisorange\BrowserDetect\Test\TestCase;
 use hisorange\BrowserDetect\Stages\DeviceDetector;
@@ -15,14 +16,12 @@ use hisorange\BrowserDetect\Stages\DeviceDetector;
 class DeviceDetectorTest extends TestCase
 {
     /**
-     * @dataProvider provideAgents
-     *
      * @covers ::__invoke()
      * @covers ::parseVersion()
-     *
      * @param string $agent
      * @param array  $changes
      */
+    #[DataProvider('provideAgents')]
     public function testInvoke($agent, $changes)
     {
         $stage  = new DeviceDetector;

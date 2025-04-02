@@ -2,6 +2,7 @@
 
 namespace hisorange\BrowserDetect\Test;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use hisorange\BrowserDetect\Contracts\ParserInterface;
 use hisorange\BrowserDetect\Parser;
 use hisorange\BrowserDetect\Contracts\ResultInterface;
@@ -89,7 +90,6 @@ class ParserTest extends TestCase
     }
 
     /**
-     * @dataProvider provideAgents
      * @param string $agent
      * @covers ::parse()
      * @covers ::makeHashKey()
@@ -97,6 +97,7 @@ class ParserTest extends TestCase
      * @throws \PHPUnit_Framework_Exception
      * @throws \PHPUnit\Framework\Exception
      */
+    #[DataProvider('provideAgents')]
     public function testParse($agent)
     {
         $parser   = $this->getParser();
