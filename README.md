@@ -1,6 +1,6 @@
 ![Browser Detection Logo](https://user-images.githubusercontent.com/3441017/126362397-d9767164-4f44-4d41-a3cd-b669e10e95dc.png)
 
-## Browser Detection v5.0 by _[hisorange](https://hisorange.me)_
+## Browser Detection v5.0 by _[hisorange (and forked by pataar)](https://hisorange.me)_
 
 [![Latest Stable Version](https://poser.pugx.org/hisorange/browser-detect/v/stable)](https://packagist.org/packages/hisorange/browser-detect)
 [![Build](https://github.com/hisorange/browser-detect/actions/workflows/latest.yml/badge.svg?branch=stable)](https://github.com/hisorange/browser-detect/actions/workflows/latest.yml)
@@ -19,7 +19,7 @@ Also tested on **every PHP** version between **5.6 &raquo; 8.4**.
 ---
 
 ```sh
-composer require hisorange/browser-detect
+composer require pataar/browser-detect
 ```
 
 Yep, it's ready to be used by You! ^.^
@@ -101,6 +101,7 @@ The following matrix has been continuously tested by the great and awesome **Git
 | Laravel 9.x  |         -          |         -          |         -          |        4.4+        |      &#10003;      |
 | Laravel 10.x |         -          |         -          |         -          |         -          |      &#10003;      |
 | Laravel 11.x |         -          |         -          |         -          |         -          |      &#10003;      |
+| Laravel 12.x |         -          |         -          |         -          |         -          |      &#10003;      |
 |  Standalone  |         -          |         -          |         -          |        4.2+        |      &#10003;      |
 
 Since 2013 the package runs tests on every possible PHP / Laravel version matrix.
