@@ -26,8 +26,6 @@
   ],
   "require": {
     "php": "^8.3",
-    "ua-parser/uap-php": "^3.9",
-    "mobiledetect/mobiledetectlib": "^4.0",
     "jaybizzle/crawler-detect": "^1.2",
     "matomo/device-detector": "^6.0"
   },

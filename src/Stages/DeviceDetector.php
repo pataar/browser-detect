@@ -21,52 +21,52 @@ class DeviceDetector implements StageInterface
      */
     public function __invoke(PayloadInterface $payload): PayloadInterface
     {
-        // Skipping on bots, the detector is set to ignore bot details.
-        if (! $payload->getValue('isBot')) {
-            if ($this->detector === null) {
-                $this->detector = new \DeviceDetector\DeviceDetector();
-                $this->detector->skipBotDetection(true);
+        $this->detector ??= new \DeviceDetector\DeviceDetector();
+        // Skip bot detection — CrawlerDetect handles that upstream.
+        $this->detector->skipBotDetection(true);
+        $this->detector->setUserAgent($payload->getAgent());
+        $this->detector->parse();
+
+        $detector = $this->detector;
+
+        $platform = $detector->getOs();
+        $browser  = $detector->getClient();
+
+        if ($platform !== null && is_array($platform)) {
+            if (! empty($platform['name'])) {
+                $payload->setValue('platformFamily', $platform['name']);
             }
-            $this->detector->setUserAgent($payload->getAgent());
-            $this->detector->parse();
 
-            $detector = $this->detector;
+            if (! empty($platform['version']) && is_string($platform['version'])) {
+                foreach ($this->parseVersion($platform['version'], 'platform') as $key => $value) {
+                    $payload->setValue($key, $value);
+                }
+            }
+        }
 
-            $platform = $detector->getOs();
-            $browser  = $detector->getClient();
-            $device   = [
+        if ($browser !== null && is_array($browser)) {
+            if (! empty($browser['name'])) {
+                $payload->setValue('browserFamily', $browser['name']);
+            }
+
+            if (! empty($browser['engine'])) {
+                $payload->setValue('browserEngine', $browser['engine']);
+            }
+
+            if (! empty($browser['version']) && is_string($browser['version'])) {
+                foreach ($this->parseVersion($browser['version'], 'browser') as $key => $value) {
+                    $payload->setValue($key, $value);
+                }
+            }
+        }
+
+        // Skip device-type classification for bots — they don't have meaningful device info.
+        if (! $payload->getValue('isBot')) {
+            $device = [
                 'type'  => $detector->getDeviceName(),
                 'brand' => $detector->getBrand(),
                 'model' => $detector->getModel(),
             ];
-
-            if ($platform !== null && is_array($platform)) {
-                if (! empty($platform['name'])) {
-                    $payload->setValue('platformFamily', $platform['name']);
-                }
-
-                if (! empty($platform['version']) && is_string($platform['version'])) {
-                    foreach ($this->parseVersion($platform['version'], 'platform') as $key => $value) {
-                        $payload->setValue($key, $value);
-                    }
-                }
-            }
-
-            if ($browser !== null && is_array($browser)) {
-                if (! empty($browser['name'])) {
-                    $payload->setValue('browserFamily', $browser['name']);
-                }
-
-                if (! empty($browser['engine'])) {
-                    $payload->setValue('browserEngine', $browser['engine']);
-                }
-
-                if (! empty($browser['version']) && is_string($browser['version'])) {
-                    foreach ($this->parseVersion($browser['version'], 'browser') as $key => $value) {
-                        $payload->setValue($key, $value);
-                    }
-                }
-            }
 
             if (! empty($device['type'])) {
                 if ($device['type'] === 'desktop') {

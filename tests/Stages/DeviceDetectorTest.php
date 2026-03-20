@@ -82,7 +82,7 @@ class DeviceDetectorTest extends TestCase
     /**
      * @covers ::__invoke()
      */
-    public function testSkipsProcessingForBots()
+    public function testSkipsDeviceClassificationForBots()
     {
         $stage   = new DeviceDetector;
         $payload = new Payload('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36');
@@ -90,8 +90,13 @@ class DeviceDetectorTest extends TestCase
 
         $stage($payload);
 
-        // DeviceDetector should not set any browser/platform values when isBot is true
-        $this->assertNull($payload->getValue('browserEngine'));
-        $this->assertNull($payload->getValue('browserFamily'));
+        // Browser/platform info should still be extracted for bots
+        $this->assertSame('Blink', $payload->getValue('browserEngine'));
+        $this->assertSame('Chrome', $payload->getValue('browserFamily'));
+
+        // Device-type flags should not be set for bots
+        $this->assertNull($payload->getValue('isMobile'));
+        $this->assertNull($payload->getValue('isTablet'));
+        $this->assertNull($payload->getValue('isDesktop'));
     }
 }
