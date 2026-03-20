@@ -23,11 +23,7 @@ class BrowserDetect implements StageInterface
         $agent = $payload->getAgent();
 
         // Resolve conflicting device type flags into a single type.
-        if ($payload->getValue('isBot') && !$payload->getValue('isMobile') && !$payload->getValue('isTablet')) {
-            $payload->setValue('isMobile', false);
-            $payload->setValue('isTablet', false);
-            $payload->setValue('isDesktop', false);
-        } elseif (!$payload->getValue('isMobile') && !$payload->getValue('isTablet')) {
+        if (!$payload->getValue('isMobile') && !$payload->getValue('isTablet')) {
             $payload->setValue('isMobile', false);
             $payload->setValue('isTablet', false);
             $payload->setValue('isDesktop', true);
