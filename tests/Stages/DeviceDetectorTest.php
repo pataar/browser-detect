@@ -5,6 +5,7 @@ namespace hisorange\BrowserDetect\Test\Stages;
 use hisorange\BrowserDetect\Payload;
 use hisorange\BrowserDetect\Test\TestCase;
 use hisorange\BrowserDetect\Stages\DeviceDetector;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Test the DeviceDetector stage.
@@ -15,14 +16,13 @@ use hisorange\BrowserDetect\Stages\DeviceDetector;
 class DeviceDetectorTest extends TestCase
 {
     /**
-     * @dataProvider provideAgents
-     *
      * @covers ::__invoke()
      * @covers ::parseVersion()
      *
      * @param string $agent
      * @param array  $changes
      */
+    #[DataProvider('provideAgents')]
     public function testInvoke($agent, $changes)
     {
         $stage  = new DeviceDetector;
@@ -69,6 +69,29 @@ class DeviceDetectorTest extends TestCase
                     'browserEngine' => null,
                 ],
             ],
+            // Smartphone user agent
+            [
+                'Mozilla/5.0 (Linux; Android 10; SM-G973F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Mobile Safari/537.36',
+                [
+                    'isMobile' => true,
+                ],
+            ],
         ];
+    }
+
+    /**
+     * @covers ::__invoke()
+     */
+    public function testSkipsProcessingForBots()
+    {
+        $stage   = new DeviceDetector;
+        $payload = new Payload('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36');
+        $payload->setValue('isBot', true);
+
+        $stage($payload);
+
+        // DeviceDetector should not set any browser/platform values when isBot is true
+        $this->assertNull($payload->getValue('browserEngine'));
+        $this->assertNull($payload->getValue('browserFamily'));
     }
 }

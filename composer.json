@@ -32,8 +32,8 @@
     "matomo/device-detector": "^6.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "^9.0 || ^10.0 || ^11.0",
-    "orchestra/testbench": "^7.0 || ^8.0 || ^9.0 || ^10.0",
+    "phpunit/phpunit": "^9.0 || ^10.0 || ^11.0 || ^12.0 || ^13.0",
+    "orchestra/testbench": "^9.0 || ^10.0 || ^11.0",
     "php-coveralls/php-coveralls": "^2.0"
   },
   "autoload": {
@@ -58,7 +58,7 @@
     }
   },
   "scripts": {
-    "test-dev": "phpunit",
-    "test": "phpunit --coverage-clover ./build/logs/clover.xml"
+    "test": "phpunit",
+    "test-with-coverage": "phpunit --coverage-clover ./build/logs/clover.xml"
   }
 }

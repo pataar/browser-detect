@@ -1,7 +1,6 @@
 name: "Tests"
 
-# Triggers the workflow on push or pull request events
-on: 
+on:
   push:
     branches:
       - stable
@@ -17,12 +16,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: [8.3, 8.4]
-        laravel-version:
-          [
-            "11.*", # Test  Laravel 11
-            "12.*", # Test  Laravel 12
-          ]
+        php-version: [8.3, 8.4, 8.5]
+        laravel-version: ["11.*", "12.*", "13.*"]
+        include:
+          - php-version: 8.5
+            laravel-version: "13.*"
+            coverage: true
+
     steps:
       - uses: actions/checkout@v4
 
@@ -30,6 +30,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
+          coverage: ${{ matrix.coverage && 'xdebug' || 'none' }}
 
       - name: Get composer cache directory
         id: composer-cache
@@ -39,23 +40,20 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-${{ matrix.laravel-version }}-${{matrix.php-version}}-composer-${{ hashFiles('**/composer.json') }}
-          restore-keys: ${{ runner.os }}-${{ matrix.laravel-version }}-${{matrix.php-version}}-composer-
+          key: ${{ runner.os }}-${{ matrix.laravel-version }}-${{ matrix.php-version }}-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: ${{ runner.os }}-${{ matrix.laravel-version }}-${{ matrix.php-version }}-composer-
 
       - name: Lock laravel/framework version
-        env:
-          LARAVEL_VERSION: ${{ matrix.laravel-version }}
         run: composer require laravel/framework:${{ matrix.laravel-version }} --no-update
 
-      - name: Vendor update
-        if: steps.composer-cache.outputs.cache-hit != 'true'
-        run: composer update --prefer-source --no-interaction
+      - name: Install dependencies
+        run: composer update --no-interaction
 
       - name: Run test suites
-        run: composer run-script test
+        run: composer run-script ${{ matrix.coverage && 'test-with-coverage' || 'test' }}
 
       - name: Coveralls
-        if: matrix.laravel-version == '12.*'
+        if: matrix.coverage
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: php vendor/bin/php-coveralls -v --coverage_clover=build/logs/clover.xml

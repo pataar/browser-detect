@@ -5,6 +5,7 @@ namespace hisorange\BrowserDetect\Test;
 use hisorange\BrowserDetect\Contracts\ParserInterface;
 use hisorange\BrowserDetect\Parser;
 use hisorange\BrowserDetect\Contracts\ResultInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Class ParserTest
@@ -89,7 +90,6 @@ class ParserTest extends TestCase
     }
 
     /**
-     * @dataProvider provideAgents
      * @param string $agent
      * @covers ::parse()
      * @covers ::makeHashKey()
@@ -97,6 +97,7 @@ class ParserTest extends TestCase
      * @throws \PHPUnit_Framework_Exception
      * @throws \PHPUnit\Framework\Exception
      */
+    #[DataProvider('provideAgents')]
     public function testParse($agent)
     {
         $parser   = $this->getParser();
@@ -139,5 +140,35 @@ class ParserTest extends TestCase
     {
         $this->expectException(\hisorange\BrowserDetect\Exceptions\BadMethodCallException::class);
         $this->getParser()->BadMethod();
+    }
+
+    /**
+     * @covers ::parse()
+     */
+    public function testRuntimeCacheReturnsSameInstance()
+    {
+        $parser = $this->getParser();
+        $agent  = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) TestCacheAgent';
+
+        $first  = $parser->parse($agent);
+        $second = $parser->parse($agent);
+
+        $this->assertSame($first, $second);
+    }
+
+    /**
+     * @covers ::detect()
+     */
+    public function testDetectTruncatesLongUserAgent()
+    {
+        $longAgent = str_repeat('A', 5000);
+        $request   = \Illuminate\Http\Request::create('/', 'GET', [], [], [], ['HTTP_USER_AGENT' => $longAgent]);
+        $parser    = new Parser(null, $request, [
+            'security' => ['max-header-length' => 10],
+        ]);
+
+        $result = $parser->detect();
+
+        $this->assertSame(10, strlen($result->userAgent()));
     }
 }

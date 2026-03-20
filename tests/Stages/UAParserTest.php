@@ -5,6 +5,7 @@ namespace hisorange\BrowserDetect\Test\Stages;
 use hisorange\BrowserDetect\Payload;
 use hisorange\BrowserDetect\Test\TestCase;
 use hisorange\BrowserDetect\Stages\UAParser;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Test the UAParser stage.
@@ -15,8 +16,6 @@ use hisorange\BrowserDetect\Stages\UAParser;
 class UAParserTest extends TestCase
 {
     /**
-     * @dataProvider provideAgent
-     *
      * @covers ::__invoke()
      *
      * @param string $agent
@@ -24,6 +23,7 @@ class UAParserTest extends TestCase
      *
      * @throws \UAParser\Exception\FileNotFoundException
      */
+    #[DataProvider('provideAgent')]
     public function testInvoke($agent, $changes)
     {
         $stage  = new UAParser;
