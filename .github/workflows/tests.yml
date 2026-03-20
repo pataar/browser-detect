@@ -18,11 +18,6 @@ jobs:
       matrix:
         php-version: [8.3, 8.4, 8.5]
         laravel-version: ["11.*", "12.*", "13.*"]
-        include:
-          - php-version: 8.5
-            laravel-version: "13.*"
-            coverage: true
-
     steps:
       - uses: actions/checkout@v4
 
@@ -30,7 +25,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
-          coverage: ${{ matrix.coverage && 'xdebug' || 'none' }}
+          coverage: none
 
       - name: Get composer cache directory
         id: composer-cache
@@ -50,10 +45,4 @@ jobs:
         run: composer update --no-interaction
 
       - name: Run test suites
-        run: composer run-script ${{ matrix.coverage && 'test-with-coverage' || 'test' }}
-
-      - name: Coveralls
-        if: matrix.coverage
-        env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: php vendor/bin/php-coveralls -v --coverage_clover=build/logs/clover.xml
+        run: composer test
