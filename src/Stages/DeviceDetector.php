@@ -67,6 +67,12 @@ class DeviceDetector implements StageInterface
                     $payload->setValue('isTablet', true);
                 } elseif ($deviceType === 'smartphone' || $deviceType === 'feature phone' || $deviceType === 'phablet') {
                     $payload->setValue('isMobile', true);
+                } elseif ($deviceType === 'tv') {
+                    $payload->setValue('isTV', true);
+                } elseif ($deviceType === 'console') {
+                    $payload->setValue('isConsole', true);
+                } elseif ($deviceType === 'wearable') {
+                    $payload->setValue('isWearable', true);
                 }
             }
 

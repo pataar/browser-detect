@@ -14,9 +14,19 @@ class BrowserDetect implements StageInterface
      * @var list<string>
      */
     protected const IN_APP_TOKENS = [
+        'BytedanceWebview',
+        'FBAN',
+        'FBAV',
+        'Instagram',
+        'Line/',
+        'LinkedInApp',
         'MicroMessenger',
+        'Pinterest',
+        'Snapchat',
+        'Telegram',
         'Twitter',
         'WebView',
+        'musical_ly',
     ];
 
     public function __invoke(PayloadInterface $payload): PayloadInterface
@@ -50,7 +60,17 @@ class BrowserDetect implements StageInterface
 
         // Popular browser vendors.
         $browserFamily = $this->getString($payload, 'browserFamily');
-        if (stripos($browserFamily, 'chrom') !== false) {
+        if (stripos($browserFamily, 'brave') !== false) {
+            $payload->setValue('isBrave', true);
+        } elseif (stripos($browserFamily, 'vivaldi') !== false) {
+            $payload->setValue('isVivaldi', true);
+        } elseif (stripos($browserFamily, 'samsung') !== false) {
+            $payload->setValue('isSamsungBrowser', true);
+        } elseif (strcasecmp($browserFamily, 'arc') === 0) {
+            $payload->setValue('isArc', true);
+        } elseif (stripos($browserFamily, 'duckduckgo') !== false) {
+            $payload->setValue('isDuckDuckGo', true);
+        } elseif (stripos($browserFamily, 'chrom') !== false) {
             $payload->setValue('isChrome', true);
         } elseif (stripos($browserFamily, 'firefox') !== false) {
             $payload->setValue('isFirefox', true);
@@ -75,10 +95,16 @@ class BrowserDetect implements StageInterface
         } elseif (stripos($platformFamily, 'android') !== false) {
             $payload->setValue('isAndroid', true);
         } elseif (
-            stripos($platformFamily, 'mac') !== false
-            || stripos($platformFamily, 'ios') !== false
+            stripos($platformFamily, 'ios') !== false
+            || stripos($platformFamily, 'ipados') !== false
         ) {
+            $payload->setValue('isiOS', true);
+        } elseif (stripos($platformFamily, 'mac') !== false) {
             $payload->setValue('isMac', true);
+        } elseif (stripos($platformFamily, 'chrome os') !== false) {
+            $payload->setValue('isChromeOS', true);
+        } elseif (stripos($platformFamily, 'harmonyos') !== false) {
+            $payload->setValue('isHarmonyOS', true);
         } elseif (stripos($platformFamily, 'linux') !== false) {
             $payload->setValue('isLinux', true);
         }
