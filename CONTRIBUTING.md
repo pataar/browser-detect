@@ -10,12 +10,12 @@ Thanks for your interest in contributing to Browser Detect!
 
 ## Development Workflow
 
-1. Create a branch from `stable`
+1. Create a branch from `main`
 2. Make your changes
 3. Add or update tests as needed
 4. Ensure all tests pass: `composer test`
 5. Commit using [Conventional Commits](#commit-messages)
-6. Open a pull request against `stable` with a [conventional commit](#commit-messages) formatted title
+6. Open a pull request against `main` with a [conventional commit](#commit-messages) formatted title
 
 ## Commit Messages
 
