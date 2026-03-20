@@ -9,7 +9,15 @@
 
 A Laravel package to identify the visitor's browser, operating system, and device type. Results are powered by two well-tested detection libraries — no magic involved.
 
-> **Fork notice:** This is a maintained fork of [hisorange/browser-detect](https://github.com/hisorange/browser-detect) by [Varga Zsolt](https://github.com/hisorange), which appears to be abandoned. Full credit to the original author for the design and initial implementation. This fork keeps the package compatible with modern PHP and Laravel versions.
+> **Fork notice:** This is a maintained fork of [hisorange/browser-detect](https://github.com/hisorange/browser-detect) by [Varga Zsolt](https://github.com/hisorange), which appears to be abandoned. Full credit to the original author for the design and initial implementation.
+
+### Changes from the original
+
+- PHP 8.3+ and Laravel 11–13 support (dropped older versions)
+- Removed `ua-parser/ua-parser` and `mobiledetect/mobiledetect` dependencies — detection is now handled entirely by `matomo/device-detector` and `jaybizzle/crawler-detect`
+- PHPStan at level `max` with zero baseline errors
+- Code style enforced by Laravel Pint
+- CI runs on every PR (tests, static analysis, code style, coverage)
 
 ## Requirements
 
