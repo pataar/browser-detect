@@ -41,3 +41,33 @@ jobs:
 
       - name: Run PHPStan
         run: composer analyse
+
+  pint:
+    name: Pint
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.4
+          coverage: none
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-pint-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: ${{ runner.os }}-pint-composer-
+
+      - name: Install dependencies
+        run: composer install --no-interaction
+
+      - name: Run Pint
+        run: composer lint -- --test
