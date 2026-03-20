@@ -175,9 +175,7 @@ final class Parser implements ParserInterface
                 $result = $this->cache->remember(
                     $key,
                     $this->cacheConfig()['interval'],
-                    function () use ($agent) {
-                        return $this->process($agent);
-                    }
+                    fn () => $this->process($agent)
                 );
             } else {
                 $result = $this->process($agent);

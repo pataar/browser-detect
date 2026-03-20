@@ -46,9 +46,7 @@ class ServiceProvider extends BaseServiceProvider
 
         Blade::if(
             'browser',
-            function ($fn) {
-                return $this->resolveParser()->detect()->$fn();
-            }
+            fn ($fn) => $this->resolveParser()->detect()->$fn()
         );
     }
 
@@ -65,6 +63,7 @@ class ServiceProvider extends BaseServiceProvider
      *
      * {@inheritdoc}
      */
+    #[\Override]
     public function register(): void
     {
         $this->app->bind('browser-detect', function () {
