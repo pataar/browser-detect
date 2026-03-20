@@ -14,7 +14,7 @@ interface ResultInterface extends JsonSerializable
     /**
      * Initialize the result object with a processed payload.
      *
-     * @param array $result
+     * @param array<string, mixed> $result
      */
     public function __construct(array $result);
 
@@ -255,7 +255,7 @@ interface ResultInterface extends JsonSerializable
     /**
      * Export the result's data into an array.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArray(): array;
 }

@@ -49,7 +49,7 @@ class MobileDetect implements StageInterface
      * Filter through the choices to find the matching one.
      *
      * @param Mobile_Detect $result
-     * @param array         $choices
+     * @param array<mixed> $choices
      *
      * @return string|null
      */

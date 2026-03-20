@@ -19,7 +19,7 @@ class Payload implements PayloadInterface
     protected $agent;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $store = [];
 
@@ -58,7 +58,7 @@ class Payload implements PayloadInterface
     }
 
     /**
-     * @inheritdoc
+     * @return array<string, mixed>
      */
     public function toArray(): array
     {

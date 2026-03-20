@@ -170,7 +170,7 @@ class Result implements ResultInterface
     protected $deviceModel = '';
 
     /**
-     * @inheritdoc
+     * @param array<string, mixed> $result
      */
     public function __construct(array $result)
     {
@@ -449,7 +449,7 @@ class Result implements ResultInterface
     }
 
     /**
-     * @inheritdoc
+     * @return array<string, mixed>
      */
     public function jsonSerialize(): array
     {
@@ -457,10 +457,13 @@ class Result implements ResultInterface
     }
 
     /**
-     * @inheritdoc
+     * @return array<string, mixed>
      */
     public function toArray(): array
     {
-        return get_object_vars($this);
+        /** @var array<string, mixed> $vars */
+        $vars = get_object_vars($this);
+
+        return $vars;
     }
 }

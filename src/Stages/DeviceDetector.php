@@ -45,7 +45,7 @@ class DeviceDetector implements StageInterface
                     $payload->setValue('platformFamily', $platform['name']);
                 }
 
-                if (! empty($platform['version'])) {
+                if (! empty($platform['version']) && is_string($platform['version'])) {
                     foreach ($this->parseVersion($platform['version'], 'platform') as $key => $value) {
                         $payload->setValue($key, $value);
                     }
@@ -61,7 +61,7 @@ class DeviceDetector implements StageInterface
                     $payload->setValue('browserEngine', $browser['engine']);
                 }
 
-                if (! empty($browser['version'])) {
+                if (! empty($browser['version']) && is_string($browser['version'])) {
                     foreach ($this->parseVersion($browser['version'], 'browser') as $key => $value) {
                         $payload->setValue($key, $value);
                     }
@@ -95,7 +95,7 @@ class DeviceDetector implements StageInterface
      *
      * @param  string $version
      * @param  string $prefix
-     * @return array
+     * @return array<string, int|string>
      */
     protected function parseVersion(string $version, string $prefix): array
     {
