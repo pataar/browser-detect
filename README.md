@@ -3,6 +3,7 @@
 [![Latest Stable Version](https://poser.pugx.org/pataar/browser-detect/v/stable)](https://packagist.org/packages/pataar/browser-detect)
 [![Build](https://github.com/pataar/browser-detect/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/pataar/browser-detect/actions/workflows/tests.yml)
 [![PHPStan](https://github.com/pataar/browser-detect/actions/workflows/static-analysis.yml/badge.svg?branch=main)](https://github.com/pataar/browser-detect/actions/workflows/static-analysis.yml)
+[![Coverage Status](https://coveralls.io/repos/github/pataar/browser-detect/badge.svg?branch=main)](https://coveralls.io/github/pataar/browser-detect?branch=main)
 [![Total Downloads](https://poser.pugx.org/pataar/browser-detect/downloads)](https://packagist.org/packages/pataar/browser-detect)
 [![License](https://poser.pugx.org/pataar/browser-detect/license)](https://packagist.org/packages/pataar/browser-detect)
 
