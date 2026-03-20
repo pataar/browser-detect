@@ -10,7 +10,7 @@
     "tablet",
     "user agent",
     "analyse",
-    "hisorange"
+    "pataar"
   ],
   "homepage": "https://github.com/pataar/browser-detect",
   "license": "MIT",
@@ -37,22 +37,22 @@
   },
   "autoload": {
     "psr-4": {
-      "hisorange\\BrowserDetect\\": "src/"
+      "Pataar\\BrowserDetect\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "hisorange\\BrowserDetect\\Test\\": "tests/"
+      "Pataar\\BrowserDetect\\Test\\": "tests/"
     }
   },
   "minimum-stability": "stable",
   "extra": {
     "laravel": {
       "providers": [
-        "hisorange\\BrowserDetect\\ServiceProvider"
+        "Pataar\\BrowserDetect\\ServiceProvider"
       ],
       "aliases": {
-        "Browser": "hisorange\\BrowserDetect\\Facade"
+        "Browser": "Pataar\\BrowserDetect\\Facade"
       }
     }
   },

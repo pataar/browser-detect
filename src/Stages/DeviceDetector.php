@@ -1,10 +1,10 @@
 <?php
 
-namespace hisorange\BrowserDetect\Stages;
+namespace Pataar\BrowserDetect\Stages;
 
 use DeviceDetector\Parser\Device\AbstractDeviceParser;
-use hisorange\BrowserDetect\Contracts\PayloadInterface;
-use hisorange\BrowserDetect\Contracts\StageInterface;
+use Pataar\BrowserDetect\Contracts\PayloadInterface;
+use Pataar\BrowserDetect\Contracts\StageInterface;
 
 /**
  * Strong browser and platform detector.

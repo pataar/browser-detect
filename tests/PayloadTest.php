@@ -1,13 +1,13 @@
 <?php
 
-namespace hisorange\BrowserDetect\Test;
+namespace Pataar\BrowserDetect\Test;
 
-use hisorange\BrowserDetect\Payload;
+use Pataar\BrowserDetect\Payload;
 
 /**
  * Class PayloadTest
  *
- * @coversDefaultClass hisorange\BrowserDetect\Payload
+ * @coversDefaultClass Pataar\BrowserDetect\Payload
  */
 class PayloadTest extends TestCase
 {

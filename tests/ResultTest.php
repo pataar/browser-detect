@@ -1,16 +1,16 @@
 <?php
 
-namespace hisorange\BrowserDetect\Test;
+namespace Pataar\BrowserDetect\Test;
 
-use hisorange\BrowserDetect\Contracts\ResultInterface;
-use hisorange\BrowserDetect\Result;
+use Pataar\BrowserDetect\Contracts\ResultInterface;
+use Pataar\BrowserDetect\Result;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Exception;
 
 /**
  * Class ResultTest
  *
- * @coversDefaultClass hisorange\BrowserDetect\Result
+ * @coversDefaultClass Pataar\BrowserDetect\Result
  */
 class ResultTest extends TestCase
 {

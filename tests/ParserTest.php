@@ -1,12 +1,12 @@
 <?php
 
-namespace hisorange\BrowserDetect\Test;
+namespace Pataar\BrowserDetect\Test;
 
-use hisorange\BrowserDetect\Contracts\ParserInterface;
-use hisorange\BrowserDetect\Contracts\ResultInterface;
-use hisorange\BrowserDetect\Exceptions\BadMethodCallException;
-use hisorange\BrowserDetect\Parser;
 use Illuminate\Http\Request;
+use Pataar\BrowserDetect\Contracts\ParserInterface;
+use Pataar\BrowserDetect\Contracts\ResultInterface;
+use Pataar\BrowserDetect\Exceptions\BadMethodCallException;
+use Pataar\BrowserDetect\Parser;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Exception;
@@ -14,7 +14,7 @@ use PHPUnit\Framework\Exception;
 /**
  * Class ParserTest
  *
- * @coversDefaultClass hisorange\BrowserDetect\Parser
+ * @coversDefaultClass Pataar\BrowserDetect\Parser
  */
 class ParserTest extends TestCase
 {

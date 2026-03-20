@@ -1,16 +1,16 @@
 <?php
 
-namespace hisorange\BrowserDetect\Test\Stages;
+namespace Pataar\BrowserDetect\Test\Stages;
 
-use hisorange\BrowserDetect\Payload;
-use hisorange\BrowserDetect\Stages\DeviceDetector;
-use hisorange\BrowserDetect\Test\TestCase;
+use Pataar\BrowserDetect\Payload;
+use Pataar\BrowserDetect\Stages\DeviceDetector;
+use Pataar\BrowserDetect\Test\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Test the DeviceDetector stage.
  *
- * @coversDefaultClass hisorange\BrowserDetect\Stages\DeviceDetector
+ * @coversDefaultClass Pataar\BrowserDetect\Stages\DeviceDetector
  */
 class DeviceDetectorTest extends TestCase
 {

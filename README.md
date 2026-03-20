@@ -74,7 +74,7 @@ if (Browser::isAndroid()) {
 ### Standalone (without Laravel)
 
 ```php
-use hisorange\BrowserDetect\Parser as Browser;
+use Pataar\BrowserDetect\Parser as Browser;
 
 if (Browser::isLinux()) {
     // Works without Laravel!
@@ -144,13 +144,13 @@ Results are cached in memory for the current request and optionally persisted vi
 In Laravel, publish the config file:
 
 ```sh
-php artisan vendor:publish --provider="hisorange\BrowserDetect\ServiceProvider"
+php artisan vendor:publish --provider="Pataar\BrowserDetect\ServiceProvider"
 ```
 
 In standalone mode, pass a custom config array:
 
 ```php
-use hisorange\BrowserDetect\Parser;
+use Pataar\BrowserDetect\Parser;
 
 $browser = new Parser(null, null, [
     'cache' => [

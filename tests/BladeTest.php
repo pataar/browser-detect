@@ -1,6 +1,6 @@
 <?php
 
-namespace hisorange\BrowserDetect\Test;
+namespace Pataar\BrowserDetect\Test;
 
 use Illuminate\Support\Facades\Blade;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 /**
  * Class BladeTest
  *
- * @coversDefaultClass \hisorange\BrowserDetect\ServiceProvider
+ * @coversDefaultClass \Pataar\BrowserDetect\ServiceProvider
  */
 class BladeTest extends TestCase
 {

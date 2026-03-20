@@ -1,6 +1,6 @@
 <?php
 
-namespace hisorange\BrowserDetect;
+namespace Pataar\BrowserDetect;
 
 use Illuminate\Support\Facades\Facade as BaseFacade;
 

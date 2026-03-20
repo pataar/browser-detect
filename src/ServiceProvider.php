@@ -1,6 +1,6 @@
 <?php
 
-namespace hisorange\BrowserDetect;
+namespace Pataar\BrowserDetect;
 
 use Illuminate\Cache\CacheManager;
 use Illuminate\Config\Repository as ConfigRepository;

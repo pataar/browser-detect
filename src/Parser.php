@@ -1,13 +1,13 @@
 <?php
 
-namespace hisorange\BrowserDetect;
+namespace Pataar\BrowserDetect;
 
-use hisorange\BrowserDetect\Contracts\ParserInterface;
-use hisorange\BrowserDetect\Contracts\ResultInterface;
-use hisorange\BrowserDetect\Contracts\StageInterface;
-use hisorange\BrowserDetect\Exceptions\BadMethodCallException;
 use Illuminate\Cache\CacheManager;
 use Illuminate\Http\Request;
+use Pataar\BrowserDetect\Contracts\ParserInterface;
+use Pataar\BrowserDetect\Contracts\ResultInterface;
+use Pataar\BrowserDetect\Contracts\StageInterface;
+use Pataar\BrowserDetect\Exceptions\BadMethodCallException;
 
 /**
  * Manages the parsing mechanism.

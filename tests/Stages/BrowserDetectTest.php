@@ -1,12 +1,12 @@
 <?php
 
-namespace hisorange\BrowserDetect\Test\Stages;
+namespace Pataar\BrowserDetect\Test\Stages;
 
-use hisorange\BrowserDetect\Contracts\ResultInterface;
-use hisorange\BrowserDetect\Payload;
-use hisorange\BrowserDetect\Result;
-use hisorange\BrowserDetect\Stages\BrowserDetect;
-use hisorange\BrowserDetect\Test\TestCase;
+use Pataar\BrowserDetect\Contracts\ResultInterface;
+use Pataar\BrowserDetect\Payload;
+use Pataar\BrowserDetect\Result;
+use Pataar\BrowserDetect\Stages\BrowserDetect;
+use Pataar\BrowserDetect\Test\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\ExpectationFailedException;
@@ -15,7 +15,7 @@ use SebastianBergmann\RecursionContext\InvalidArgumentException;
 /**
  * Test the BrowserDetect stage.
  *
- * @coversDefaultClass hisorange\BrowserDetect\Stages\BrowserDetect
+ * @coversDefaultClass Pataar\BrowserDetect\Stages\BrowserDetect
  */
 class BrowserDetectTest extends TestCase
 {

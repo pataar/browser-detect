@@ -1,10 +1,10 @@
 <?php
 
-namespace hisorange\BrowserDetect\Test;
+namespace Pataar\BrowserDetect\Test;
 
-use hisorange\BrowserDetect\Facade;
-use hisorange\BrowserDetect\ServiceProvider;
 use Illuminate\Foundation\Application;
+use Pataar\BrowserDetect\Facade;
+use Pataar\BrowserDetect\ServiceProvider;
 
 /**
  * Base test case for the package tests.
