@@ -23,9 +23,11 @@ class DeviceDetector implements StageInterface
     {
         // Skipping on bots, the detector is set to ignore bot details.
         if (! $payload->getValue('isBot')) {
-            $this->detector ??= new \DeviceDetector\DeviceDetector();
+            if ($this->detector === null) {
+                $this->detector = new \DeviceDetector\DeviceDetector();
+                $this->detector->skipBotDetection(true);
+            }
             $this->detector->setUserAgent($payload->getAgent());
-            $this->detector->skipBotDetection(true);
             $this->detector->parse();
 
             $detector = $this->detector;
