@@ -1,7 +1,7 @@
 name: "Tests"
 
 # Triggers the workflow on push or pull request events
-on: 
+on:
   push:
     branches:
       - stable
@@ -17,11 +17,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: [8.3, 8.4]
-        laravel-version:
-          [
+        php-version: [8.3, 8.4, 8.5]
+        laravel-version: [
             "11.*", # Test  Laravel 11
             "12.*", # Test  Laravel 12
+            "13.*", # Test  Laravel 13
           ]
     steps:
       - uses: actions/checkout@v4
@@ -52,7 +52,7 @@ jobs:
         run: composer update --prefer-source --no-interaction
 
       - name: Run test suites
-        run: composer run-script test
+        run: composer run-script test-with-coverage
 
       - name: Coveralls
         if: matrix.laravel-version == '12.*'
