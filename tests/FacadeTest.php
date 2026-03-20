@@ -1,9 +1,9 @@
 <?php
 
-namespace hisorange\BrowserDetect\Test;
+namespace Pataar\BrowserDetect\Test;
 
-use hisorange\BrowserDetect\Contracts\ParserInterface;
-use hisorange\BrowserDetect\Facade;
+use Pataar\BrowserDetect\Contracts\ParserInterface;
+use Pataar\BrowserDetect\Facade;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Exception;
 
@@ -13,7 +13,7 @@ use PHPUnit\Framework\Exception;
 class FacadeTest extends TestCase
 {
     /**
-     * @covers \hisorange\BrowserDetect\Facade
+     * @covers \Pataar\BrowserDetect\Facade
      *
      * @throws \PHPUnit_Framework_AssertionFailedError
      * @throws AssertionFailedError

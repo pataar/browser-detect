@@ -1,14 +1,14 @@
 <?php
 
-namespace hisorange\BrowserDetect\Test;
+namespace Pataar\BrowserDetect\Test;
 
-use hisorange\BrowserDetect\Contracts\ParserInterface;
+use Pataar\BrowserDetect\Contracts\ParserInterface;
 use PHPUnit\Framework\Exception;
 
 /**
  * Class ServiceProviderTest
  *
- * @coversDefaultClass hisorange\BrowserDetect\ServiceProvider
+ * @coversDefaultClass Pataar\BrowserDetect\ServiceProvider
  */
 class ServiceProviderTest extends TestCase
 {

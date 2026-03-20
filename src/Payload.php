@@ -1,8 +1,8 @@
 <?php
 
-namespace hisorange\BrowserDetect;
+namespace Pataar\BrowserDetect;
 
-use hisorange\BrowserDetect\Contracts\PayloadInterface;
+use Pataar\BrowserDetect\Contracts\PayloadInterface;
 
 /**
  * This class is passed down in the pipeline,

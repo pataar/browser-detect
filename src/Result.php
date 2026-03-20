@@ -1,8 +1,8 @@
 <?php
 
-namespace hisorange\BrowserDetect;
+namespace Pataar\BrowserDetect;
 
-use hisorange\BrowserDetect\Contracts\ResultInterface;
+use Pataar\BrowserDetect\Contracts\ResultInterface;
 
 /**
  * The object is used for safely accessing the

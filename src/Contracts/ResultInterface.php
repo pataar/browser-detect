@@ -1,6 +1,6 @@
 <?php
 
-namespace hisorange\BrowserDetect\Contracts;
+namespace Pataar\BrowserDetect\Contracts;
 
 use JsonSerializable;
 

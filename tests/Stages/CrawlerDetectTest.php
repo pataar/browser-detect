@@ -1,16 +1,16 @@
 <?php
 
-namespace hisorange\BrowserDetect\Test\Stages;
+namespace Pataar\BrowserDetect\Test\Stages;
 
-use hisorange\BrowserDetect\Payload;
-use hisorange\BrowserDetect\Stages\CrawlerDetect;
-use hisorange\BrowserDetect\Test\TestCase;
+use Pataar\BrowserDetect\Payload;
+use Pataar\BrowserDetect\Stages\CrawlerDetect;
+use Pataar\BrowserDetect\Test\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Test the CrawlerDetect stage.
  *
- * @coversDefaultClass hisorange\BrowserDetect\Stages\CrawlerDetect
+ * @coversDefaultClass Pataar\BrowserDetect\Stages\CrawlerDetect
  */
 class CrawlerDetectTest extends TestCase
 {
