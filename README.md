@@ -14,10 +14,7 @@ A Laravel package to identify the visitor's browser, operating system, and devic
 ### Changes from the original
 
 - PHP 8.3+ and Laravel 11–13 support (dropped older versions)
-- Removed `ua-parser/ua-parser` and `mobiledetect/mobiledetect` dependencies — detection is now handled entirely by `matomo/device-detector` and `jaybizzle/crawler-detect`
-- PHPStan at level `max` with zero baseline errors
-- Code style enforced by Laravel Pint
-- CI runs on every PR (tests, static analysis, code style, coverage)
+- Removed `ua-parser/ua-parser` and `mobiledetect/mobiledetect` — detection is now powered by fewer, better-maintained libraries
 
 ## Requirements
 
