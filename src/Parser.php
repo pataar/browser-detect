@@ -80,8 +80,6 @@ final class Parser implements ParserInterface
 
         $this->pipeline = [
             new Stages\CrawlerDetect(),
-            new Stages\UAParser(),
-            new Stages\MobileDetect(),
             new Stages\DeviceDetector(),
             new Stages\BrowserDetect(),
         ];

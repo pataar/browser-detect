@@ -12,7 +12,7 @@ use PHPUnit\Framework\ExpectationFailedException;
 use SebastianBergmann\RecursionContext\InvalidArgumentException;
 
 /**
- * Test the UAParser stage.
+ * Test the BrowserDetect stage.
  *
  * @package            hisorange\BrowserDetect\Test\Stages
  * @coversDefaultClass hisorange\BrowserDetect\Stages\BrowserDetect
