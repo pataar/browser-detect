@@ -29,7 +29,7 @@ interface ParserInterface
     /**
      * Read the final config for the instance.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function config(): array;
 }

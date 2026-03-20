@@ -29,14 +29,14 @@ final class Parser implements ParserInterface
     /**
      * Runtime cache to reduce the parse calls.
      *
-     * @var array
+     * @var array<string, ResultInterface>
      */
     protected $runtime;
 
     /**
      * Parsing configurations.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $config;
 
@@ -57,11 +57,11 @@ final class Parser implements ParserInterface
     /**
      * Parser constructor.
      *
-     * @param CacheManager $cache
-     * @param Request      $request
-     * @param array        $config
+     * @param CacheManager|null $cache
+     * @param Request|null      $request
+     * @param array<string, mixed> $config
      */
-    public function __construct($cache = null, $request = null, array $config = [])
+    public function __construct(?CacheManager $cache = null, ?Request $request = null, array $config = [])
     {
         if ($cache !== null) {
             $this->cache   = $cache;
@@ -71,10 +71,12 @@ final class Parser implements ParserInterface
             $this->request = $request;
         }
 
-        $this->config = array_replace_recursive(
-            require(__DIR__ . '/../config/browser-detect.php'),
-            $config
-        );
+        /** @var array<string, mixed> $defaults */
+        $defaults = require __DIR__ . '/../config/browser-detect.php';
+
+        /** @var array<string, mixed> $merged */
+        $merged = array_replace_recursive($defaults, $config);
+        $this->config = $merged;
 
         $this->runtime = [];
 
@@ -88,7 +90,7 @@ final class Parser implements ParserInterface
     /**
      * Read the applied final config.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function config(): array
     {
@@ -101,7 +103,7 @@ final class Parser implements ParserInterface
      * @throws \hisorange\BrowserDetect\Exceptions\BadMethodCallException
      *
      * @param string $method
-     * @param array  $params
+     * @param array<int, mixed>  $params
      *
      * @return mixed
      */
@@ -124,7 +126,7 @@ final class Parser implements ParserInterface
      * Acts as a facade, but proxies all the call to a singleton.
      *
      * @param string $method
-     * @param array $params
+     * @param array<int, mixed> $params
      *
      * @return mixed
      */
@@ -147,7 +149,7 @@ final class Parser implements ParserInterface
         $userAgentString = substr(
             $this->getUserAgentString(),
             0,
-            $this->config['security']['max-header-length']
+            $this->securityConfig()['max-header-length']
         );
 
         return $this->parse($userAgentString);
@@ -164,7 +166,7 @@ final class Parser implements ParserInterface
         if ($this->request !== null) {
             return $this->request->userAgent() ?? '';
         } else {
-            return isset($_SERVER['HTTP_USER_AGENT']) ? ((string) $_SERVER['HTTP_USER_AGENT']) : '';
+            return is_string($_SERVER['HTTP_USER_AGENT'] ?? null) ? $_SERVER['HTTP_USER_AGENT'] : '';
         }
     }
 
@@ -178,9 +180,10 @@ final class Parser implements ParserInterface
         if (!isset($this->runtime[$key])) {
             // In standalone mode, You can run the parser without a cache.
             if ($this->cache !== null) {
+                /** @var ResultInterface $result */
                 $result = $this->cache->remember(
                     $key,
-                    $this->config['cache']['interval'],
+                    $this->cacheConfig()['interval'],
                     function () use ($agent) {
                         return $this->process($agent);
                     }
@@ -203,7 +206,25 @@ final class Parser implements ParserInterface
      */
     protected function makeHashKey(string $agent): string
     {
-        return $this->config['cache']['prefix'] . hash('xxh128', $agent);
+        return $this->cacheConfig()['prefix'] . hash('xxh128', $agent);
+    }
+
+    /**
+     * @return array{interval: int, prefix: string}
+     */
+    private function cacheConfig(): array
+    {
+        /** @var array{interval: int, prefix: string} */
+        return $this->config['cache'];
+    }
+
+    /**
+     * @return array{max-header-length: int}
+     */
+    private function securityConfig(): array
+    {
+        /** @var array{max-header-length: int} */
+        return $this->config['security'];
     }
 
     /**
@@ -214,11 +235,11 @@ final class Parser implements ParserInterface
      */
     protected function process(string $agent): ResultInterface
     {
-        $payload = array_reduce(
-            $this->pipeline,
-            fn(Payload $carry, StageInterface $stage) => $stage($carry),
-            new Payload($agent)
-        );
+        $payload = new Payload($agent);
+
+        foreach ($this->pipeline as $stage) {
+            $payload = $stage($payload);
+        }
 
         return new Result($payload->toArray());
     }

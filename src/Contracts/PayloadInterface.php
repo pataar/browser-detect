@@ -39,7 +39,7 @@ interface PayloadInterface
     /**
      * Immutable accessor to the internal data collection.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArray(): array;
 }

@@ -2,6 +2,9 @@
 
 namespace hisorange\BrowserDetect;
 
+use Illuminate\Cache\CacheManager;
+use Illuminate\Config\Repository as ConfigRepository;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
@@ -42,15 +45,23 @@ class ServiceProvider extends BaseServiceProvider
     {
         foreach (['desktop', 'tablet', 'mobile'] as $directive) {
             $method = 'is' . ucfirst($directive);
-            Blade::if($directive, fn () => app()->make('browser-detect')->detect()->$method());
+            Blade::if($directive, fn () => $this->resolveParser()->detect()->$method());
         }
 
         Blade::if(
             'browser',
             function ($fn) {
-                return app()->make('browser-detect')->detect()->$fn();
+                return $this->resolveParser()->detect()->$fn();
             }
         );
+    }
+
+    protected function resolveParser(): Parser
+    {
+        /** @var Parser $parser */
+        $parser = $this->app->make('browser-detect');
+
+        return $parser;
     }
 
     /**
@@ -60,8 +71,20 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind('browser-detect', function ($app) {
-            return new Parser($app->make('cache'), $app->make('request'), $app->make('config')['browser-detect'] ?? []);
+        $this->app->bind('browser-detect', function () {
+            /** @var ConfigRepository $configRepo */
+            $configRepo = $this->app->make('config');
+
+            /** @var array<string, mixed> $config */
+            $config = $configRepo['browser-detect'] ?? [];
+
+            /** @var CacheManager $cache */
+            $cache = $this->app->make('cache');
+
+            /** @var Request $request */
+            $request = $this->app->make('request');
+
+            return new Parser($cache, $request, $config);
         });
     }
 }

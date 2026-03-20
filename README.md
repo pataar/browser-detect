@@ -165,6 +165,10 @@ Available options:
 | `cache.prefix`               | `bd4_`   | Cache key prefix                         |
 | `security.max-header-length` | `2048`   | Max user agent length (DoS protection)   |
 
+## Quality
+
+This package aims for 100% test coverage and PHPStan level `max` with zero baseline errors.
+
 ## Credits
 
 This package was originally created by [Varga Zsolt (hisorange)](https://github.com/hisorange). This fork is maintained by [Pieter Willekens (pataar)](https://github.com/pataar).

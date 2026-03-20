@@ -2,10 +2,8 @@
 
 namespace hisorange\BrowserDetect\Stages;
 
-use hisorange\BrowserDetect\Result;
-use hisorange\BrowserDetect\Contracts\StageInterface;
-use hisorange\BrowserDetect\Contracts\ResultInterface;
 use hisorange\BrowserDetect\Contracts\PayloadInterface;
+use hisorange\BrowserDetect\Contracts\StageInterface;
 
 /**
  * BrowserDetect stage to fix mix ups caused by different results.
@@ -52,7 +50,7 @@ class BrowserDetect implements StageInterface
         }
 
         // Popular browser vendors.
-        $browserFamily = $payload->getValue('browserFamily') ?? '';
+        $browserFamily = $this->getString($payload, 'browserFamily');
         if (false !== stripos($browserFamily, 'chrom')) {
             $payload->setValue('isChrome', true);
         } elseif (false !== stripos($browserFamily, 'firefox')) {
@@ -71,11 +69,12 @@ class BrowserDetect implements StageInterface
             $payload->setValue('isEdge', true);
         }
 
-        $this->buildVersionAndName($payload, 'browser');
-        $this->buildVersionAndName($payload, 'platform');
+        $this->buildVersionAndName($payload, 'browser', $browserFamily);
 
         // Popular os vendors.
-        $platformFamily = $payload->getValue('platformFamily') ?? '';
+        $platformFamily = $this->getString($payload, 'platformFamily');
+
+        $this->buildVersionAndName($payload, 'platform', $platformFamily);
         if (false !== stripos($platformFamily, 'windows')) {
             $payload->setValue('isWindows', true);
         } elseif (false !== stripos($platformFamily, 'android')) {
@@ -98,16 +97,16 @@ class BrowserDetect implements StageInterface
     /**
      * Build version string and human-readable name for the given prefix (browser or platform).
      */
-    protected function buildVersionAndName(PayloadInterface $payload, string $prefix): void
+    protected function buildVersionAndName(PayloadInterface $payload, string $prefix, string $family): void
     {
         $version = $this->trimVersion(implode('.', [
-            $payload->getValue("{$prefix}VersionMajor"),
-            $payload->getValue("{$prefix}VersionMinor"),
-            $payload->getValue("{$prefix}VersionPatch"),
+            $this->getString($payload, "{$prefix}VersionMajor", '0'),
+            $this->getString($payload, "{$prefix}VersionMinor", '0'),
+            $this->getString($payload, "{$prefix}VersionPatch", '0'),
         ]));
 
         $payload->setValue("{$prefix}Version", $version);
-        $payload->setValue("{$prefix}Name", trim($payload->getValue("{$prefix}Family") . ' ' . $version));
+        $payload->setValue("{$prefix}Name", trim($family . ' ' . $version));
     }
 
     /**
@@ -143,6 +142,17 @@ class BrowserDetect implements StageInterface
         }
 
         return false;
+    }
+
+    protected function getString(PayloadInterface $payload, string $key, string $default = ''): string
+    {
+        $value = $payload->getValue($key);
+
+        if (is_string($value)) {
+            return $value;
+        }
+
+        return is_scalar($value) ? (string) $value : $default;
     }
 
     /**
