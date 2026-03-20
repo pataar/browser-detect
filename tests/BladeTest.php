@@ -8,7 +8,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
 /**
  * Class BladeTest
  *
- * @package hisorange\BrowserDetect\Test
  * @coversDefaultClass \hisorange\BrowserDetect\ServiceProvider
  */
 class BladeTest extends TestCase
@@ -22,13 +21,14 @@ class BladeTest extends TestCase
     }
 
     /**
-     * @param string $directive
+     * @param  string  $directive
+     *
      * @covers       ::registerDirectives()
      */
     #[DataProvider('directiveProvider')]
-    public function testDirectives($directive)
+    public function test_directives($directive)
     {
-        $actual   = Blade::compileString('@' . $directive . ' Ok @end' . $directive);
+        $actual = Blade::compileString('@'.$directive.' Ok @end'.$directive);
         $expected = "<?php if (\Illuminate\Support\Facades\Blade::check('$directive')): ?> Ok <?php endif; ?>";
 
         $this->assertSame($expected, $actual);
@@ -43,20 +43,22 @@ class BladeTest extends TestCase
     }
 
     /**
-     * @param string $directive
+     * @param  string  $directive
+     *
      * @covers       ::registerDirectives()
      */
     #[DataProvider('directiveValuedProvider')]
-    public function testCheckingDirectives($directive, $expected)
+    public function test_checking_directives($directive, $expected)
     {
         $this->assertSame($expected, Blade::check($directive));
     }
 
     /**
-     * @param string $directive
+     * @param  string  $directive
+     *
      * @covers       ::registerDirectives()
      */
-    public function testBrowserDirectiveResult()
+    public function test_browser_directive_result()
     {
         $this->assertSame(true, Blade::check('browser', 'isDesktop'));
         $this->assertSame(false, Blade::check('browser', 'ISMOBILE'));
@@ -65,9 +67,9 @@ class BladeTest extends TestCase
     /**
      * @covers ::registerDirectives()
      */
-    public function testBrowserDirective()
+    public function test_browser_directive()
     {
-        $actual   = Blade::compileString('@browser("isMobile") Ok @endbrowser');
+        $actual = Blade::compileString('@browser("isMobile") Ok @endbrowser');
         $expected = '<?php if (\Illuminate\Support\Facades\Blade::check(\'browser\', "isMobile")): ?> Ok <?php endif; ?>';
 
         $this->assertSame($expected, $actual);

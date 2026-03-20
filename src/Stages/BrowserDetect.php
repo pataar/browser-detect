@@ -7,8 +7,6 @@ use hisorange\BrowserDetect\Contracts\StageInterface;
 
 /**
  * BrowserDetect stage to fix mix ups caused by different results.
- *
- * @package hisorange\BrowserDetect\Stages
  */
 class BrowserDetect implements StageInterface
 {
@@ -21,10 +19,6 @@ class BrowserDetect implements StageInterface
         'WebView',
     ];
 
-    /**
-     * @param  PayloadInterface $payload
-     * @return PayloadInterface
-     */
     public function __invoke(PayloadInterface $payload): PayloadInterface
     {
         $agent = $payload->getAgent();
@@ -56,17 +50,17 @@ class BrowserDetect implements StageInterface
 
         // Popular browser vendors.
         $browserFamily = $this->getString($payload, 'browserFamily');
-        if (false !== stripos($browserFamily, 'chrom')) {
+        if (stripos($browserFamily, 'chrom') !== false) {
             $payload->setValue('isChrome', true);
-        } elseif (false !== stripos($browserFamily, 'firefox')) {
+        } elseif (stripos($browserFamily, 'firefox') !== false) {
             $payload->setValue('isFirefox', true);
-        } elseif (false !== stripos($browserFamily, 'opera')) {
+        } elseif (stripos($browserFamily, 'opera') !== false) {
             $payload->setValue('isOpera', true);
-        } elseif (false !== stripos($browserFamily, 'safari')) {
+        } elseif (stripos($browserFamily, 'safari') !== false) {
             $payload->setValue('isSafari', true);
         } elseif (preg_match('/explorer|\bie\b|trident/i', $browserFamily)) {
             $payload->setValue('isIE', true);
-        } elseif (false !== stripos($browserFamily, 'edge')) {
+        } elseif (stripos($browserFamily, 'edge') !== false) {
             $payload->setValue('isEdge', true);
         }
 
@@ -76,20 +70,20 @@ class BrowserDetect implements StageInterface
         $platformFamily = $this->getString($payload, 'platformFamily');
 
         $this->buildVersionAndName($payload, 'platform', $platformFamily);
-        if (false !== stripos($platformFamily, 'windows')) {
+        if (stripos($platformFamily, 'windows') !== false) {
             $payload->setValue('isWindows', true);
-        } elseif (false !== stripos($platformFamily, 'android')) {
+        } elseif (stripos($platformFamily, 'android') !== false) {
             $payload->setValue('isAndroid', true);
         } elseif (
-            false !== stripos($platformFamily, 'mac')
-            || false !== stripos($platformFamily, 'ios')
+            stripos($platformFamily, 'mac') !== false
+            || stripos($platformFamily, 'ios') !== false
         ) {
             $payload->setValue('isMac', true);
-        } elseif (false !== stripos($platformFamily, 'linux')) {
+        } elseif (stripos($platformFamily, 'linux') !== false) {
             $payload->setValue('isLinux', true);
         }
 
-        # Request: https://github.com/hisorange/browser-detect/issues/156
+        // Request: https://github.com/hisorange/browser-detect/issues/156
         $payload->setValue('isInApp', $this->detectIsInApp($agent));
 
         return $payload;
@@ -107,7 +101,7 @@ class BrowserDetect implements StageInterface
         ]));
 
         $payload->setValue("{$prefix}Version", $version);
-        $payload->setValue("{$prefix}Name", trim($family . ' ' . $version));
+        $payload->setValue("{$prefix}Name", trim($family.' '.$version));
     }
 
     /**
@@ -148,9 +142,6 @@ class BrowserDetect implements StageInterface
     /**
      * Trim the trailing .0 versions from a semantic version string.
      * It makes it more readable for an end user.
-     *
-     * @param  string $version
-     * @return string
      */
     protected function trimVersion(string $version): string
     {

@@ -7,7 +7,7 @@ interface PayloadInterface
     /**
      * Initialize the payload for process.
      *
-     * @param string $agent User agent string.
+     * @param  string  $agent  User agent string.
      */
     public function __construct(string $agent);
 
@@ -21,8 +21,8 @@ interface PayloadInterface
     /**
      * Set a value in the temporary data schema before the next stage.
      *
-     * @param string $key   Storage key.
-     * @param mixed  $value Stored value.
+     * @param  string  $key  Storage key.
+     * @param  mixed  $value  Stored value.
      */
     public function setValue(string $key, $value): void;
 
@@ -30,8 +30,7 @@ interface PayloadInterface
      * Get a value if exists in the data schema,
      * returns null if the key does not exist.
      *
-     * @param string $key Temporary data key.
-     *
+     * @param  string  $key  Temporary data key.
      * @return mixed
      */
     public function getValue(string $key);

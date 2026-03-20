@@ -3,14 +3,13 @@
 namespace hisorange\BrowserDetect\Test\Stages;
 
 use hisorange\BrowserDetect\Payload;
-use hisorange\BrowserDetect\Test\TestCase;
 use hisorange\BrowserDetect\Stages\DeviceDetector;
+use hisorange\BrowserDetect\Test\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Test the DeviceDetector stage.
  *
- * @package            hisorange\BrowserDetect\Test\Stages
  * @coversDefaultClass hisorange\BrowserDetect\Stages\DeviceDetector
  */
 class DeviceDetectorTest extends TestCase
@@ -19,19 +18,19 @@ class DeviceDetectorTest extends TestCase
      * @covers ::__invoke()
      * @covers ::parseVersion()
      *
-     * @param string $agent
-     * @param array  $changes
+     * @param  string  $agent
+     * @param  array  $changes
      */
     #[DataProvider('provideAgents')]
-    public function testInvoke($agent, $changes)
+    public function test_invoke($agent, $changes)
     {
-        $stage  = new DeviceDetector;
+        $stage = new DeviceDetector;
         $result = new Payload($agent);
 
         $stage($result);
 
         foreach ($changes as $key => $expected) {
-            $this->assertSame($expected, $result->getValue($key), 'Changes are not matched ' . print_r($changes, true) . ' with ' . $key . ' being ' . var_export($result->getValue($key), true));
+            $this->assertSame($expected, $result->getValue($key), 'Changes are not matched '.print_r($changes, true).' with '.$key.' being '.var_export($result->getValue($key), true));
         }
     }
 
@@ -47,7 +46,7 @@ class DeviceDetectorTest extends TestCase
             [
                 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.360',
                 [
-                    'browserEngine'       => 'Blink',
+                    'browserEngine' => 'Blink',
                     'browserVersionMajor' => 63,
                     'browserVersionMinor' => 0,
                     'browserVersionPatch' => null,
@@ -57,14 +56,14 @@ class DeviceDetectorTest extends TestCase
                 'Mozilla/5.0(iPad; U; CPU iPhone OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B314 Safari/531.21.',
                 [
                     'isTablet' => true,
-                ]
+                ],
             ],
             [
                 'NotGonaMatchMe',
                 [
-                    'isMobile'      => null,
-                    'isTablet'      => null,
-                    'isDesktop'     => null,
+                    'isMobile' => null,
+                    'isTablet' => null,
+                    'isDesktop' => null,
                     'browserEngine' => null,
                 ],
             ],
@@ -81,9 +80,9 @@ class DeviceDetectorTest extends TestCase
     /**
      * @covers ::__invoke()
      */
-    public function testSkipsDeviceClassificationForBots()
+    public function test_skips_device_classification_for_bots()
     {
-        $stage   = new DeviceDetector;
+        $stage = new DeviceDetector;
         $payload = new Payload('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36');
         $payload->setValue('isBot', true);
 

@@ -8,8 +8,6 @@ use hisorange\BrowserDetect\Contracts\PayloadInterface;
  * This class is passed down in the pipeline,
  * and each stage makes the changes on this
  * state carrier object.
- *
- * @package hisorange\BrowserDetect
  */
 class Payload implements PayloadInterface
 {
@@ -24,7 +22,7 @@ class Payload implements PayloadInterface
     protected $store = [];
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function __construct(string $agent)
     {
@@ -32,7 +30,7 @@ class Payload implements PayloadInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getAgent(): string
     {
@@ -40,7 +38,7 @@ class Payload implements PayloadInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getValue(string $key)
     {
@@ -48,7 +46,7 @@ class Payload implements PayloadInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setValue(string $key, $value): void
     {
@@ -65,7 +63,7 @@ class Payload implements PayloadInterface
         return array_merge(
             $this->store,
             [
-            'userAgent' => $this->agent,
+                'userAgent' => $this->agent,
             ]
         );
     }

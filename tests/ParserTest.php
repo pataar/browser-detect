@@ -3,13 +3,17 @@
 namespace hisorange\BrowserDetect\Test;
 
 use hisorange\BrowserDetect\Contracts\ParserInterface;
-use hisorange\BrowserDetect\Parser;
 use hisorange\BrowserDetect\Contracts\ResultInterface;
+use hisorange\BrowserDetect\Exceptions\BadMethodCallException;
+use hisorange\BrowserDetect\Parser;
+use Illuminate\Http\Request;
+use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Exception;
 
 /**
  * Class ParserTest
- * @package            hisorange\BrowserDetect\Test
+ *
  * @coversDefaultClass hisorange\BrowserDetect\Parser
  */
 class ParserTest extends TestCase
@@ -18,13 +22,14 @@ class ParserTest extends TestCase
      * @covers ::detect()
      * @covers ::makeHashKey()
      * @covers ::process()
+     *
      * @throws \PHPUnit_Framework_Exception
-     * @throws \PHPUnit\Framework\Exception
+     * @throws Exception
      */
-    public function testDetect()
+    public function test_detect()
     {
-        $parser   = $this->getParser();
-        $actual   = $parser->detect();
+        $parser = $this->getParser();
+        $actual = $parser->detect();
         $expected = ResultInterface::class;
 
         $this->assertInstanceOf($expected, $actual);
@@ -33,12 +38,12 @@ class ParserTest extends TestCase
     /**
      * @covers ::config()
      */
-    public function testConfigMerge()
+    public function test_config_merge()
     {
         $i = new Parser(null, null, [
             'cache' => [
-                'interval' => 42
-            ]
+                'interval' => 42,
+            ],
         ]);
 
         $this->assertSame($i->config()['cache']['interval'], 42);
@@ -49,16 +54,16 @@ class ParserTest extends TestCase
      * @covers ::__construct()
      * @covers ::parse()
      */
-    public function testStandaloneConstruct()
+    public function test_standalone_construct()
     {
-        $this->assertInstanceOf(ResultInterface::class, (new Parser())->parse('test'));
+        $this->assertInstanceOf(ResultInterface::class, (new Parser)->parse('test'));
     }
 
     /**
      * @covers ::__callStatic()
      * @covers ::getUserAgentString()
      */
-    public function testStandaloneFacade()
+    public function test_standalone_facade()
     {
         $this->assertSame(Parser::isMobile(), false);
     }
@@ -66,7 +71,7 @@ class ParserTest extends TestCase
     /**
      * Check if the results are the same.
      */
-    public function testStandaloneResult()
+    public function test_standalone_result()
     {
         $this->assertSame(Parser::toArray(), $this->getParser()->parse('')->toArray());
     }
@@ -74,15 +79,13 @@ class ParserTest extends TestCase
     /**
      * @covers ::parse()
      */
-    public function testStandaloneRuntimeCache()
+    public function test_standalone_runtime_cache()
     {
         $this->assertSame(Parser::toArray(), Parser::toArray());
     }
 
     /**
      * @covers ::__construct()
-     *
-     * @return \hisorange\BrowserDetect\Contracts\ParserInterface
      */
     protected function getParser(): ParserInterface
     {
@@ -90,18 +93,20 @@ class ParserTest extends TestCase
     }
 
     /**
-     * @param string $agent
+     * @param  string  $agent
+     *
      * @covers ::parse()
      * @covers ::makeHashKey()
      * @covers ::process()
+     *
      * @throws \PHPUnit_Framework_Exception
-     * @throws \PHPUnit\Framework\Exception
+     * @throws Exception
      */
     #[DataProvider('provideAgents')]
-    public function testParse($agent)
+    public function test_parse($agent)
     {
-        $parser   = $this->getParser();
-        $actual   = $parser->parse($agent);
+        $parser = $this->getParser();
+        $actual = $parser->parse($agent);
         $expected = ResultInterface::class;
 
         $this->assertInstanceOf($expected, $actual);
@@ -125,10 +130,11 @@ class ParserTest extends TestCase
 
     /**
      * @covers ::__call()
-     * @throws \PHPUnit\Framework\AssertionFailedError
+     *
+     * @throws AssertionFailedError
      * @throws \PHPUnit_Framework_AssertionFailedError
      */
-    public function testCall()
+    public function test_call()
     {
         $this->assertNotEmpty($this->getParser()->userAgent());
     }
@@ -136,21 +142,21 @@ class ParserTest extends TestCase
     /**
      * @covers ::__call()
      */
-    public function testCallException()
+    public function test_call_exception()
     {
-        $this->expectException(\hisorange\BrowserDetect\Exceptions\BadMethodCallException::class);
+        $this->expectException(BadMethodCallException::class);
         $this->getParser()->BadMethod();
     }
 
     /**
      * @covers ::parse()
      */
-    public function testRuntimeCacheReturnsSameInstance()
+    public function test_runtime_cache_returns_same_instance()
     {
         $parser = $this->getParser();
-        $agent  = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) TestCacheAgent';
+        $agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) TestCacheAgent';
 
-        $first  = $parser->parse($agent);
+        $first = $parser->parse($agent);
         $second = $parser->parse($agent);
 
         $this->assertSame($first, $second);
@@ -159,11 +165,11 @@ class ParserTest extends TestCase
     /**
      * @covers ::detect()
      */
-    public function testDetectTruncatesLongUserAgent()
+    public function test_detect_truncates_long_user_agent()
     {
         $longAgent = str_repeat('A', 5000);
-        $request   = \Illuminate\Http\Request::create('/', 'GET', [], [], [], ['HTTP_USER_AGENT' => $longAgent]);
-        $parser    = new Parser(null, $request, [
+        $request = Request::create('/', 'GET', [], [], [], ['HTTP_USER_AGENT' => $longAgent]);
+        $parser = new Parser(null, $request, [
             'security' => ['max-header-length' => 10],
         ]);
 

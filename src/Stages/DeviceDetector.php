@@ -2,27 +2,21 @@
 
 namespace hisorange\BrowserDetect\Stages;
 
-use hisorange\BrowserDetect\Contracts\StageInterface;
 use DeviceDetector\Parser\Device\AbstractDeviceParser;
 use hisorange\BrowserDetect\Contracts\PayloadInterface;
+use hisorange\BrowserDetect\Contracts\StageInterface;
 
 /**
  * Strong browser and platform detector.
- *
- * @package hisorange\BrowserDetect\Stages
  */
 class DeviceDetector implements StageInterface
 {
     protected ?\DeviceDetector\DeviceDetector $detector = null;
 
-    /**
-     * @param  PayloadInterface $payload
-     * @return PayloadInterface
-     */
     public function __invoke(PayloadInterface $payload): PayloadInterface
     {
         if ($this->detector === null) {
-            $this->detector = new \DeviceDetector\DeviceDetector();
+            $this->detector = new \DeviceDetector\DeviceDetector;
             // Skip bot detection — CrawlerDetect handles that upstream.
             $this->detector->skipBotDetection(true);
         }
@@ -32,7 +26,7 @@ class DeviceDetector implements StageInterface
         $detector = $this->detector;
 
         $platform = $detector->getOs();
-        $browser  = $detector->getClient();
+        $browser = $detector->getClient();
 
         if ($platform !== null && is_array($platform)) {
             if (! empty($platform['name'])) {
@@ -93,8 +87,6 @@ class DeviceDetector implements StageInterface
     /**
      * Parse semantic version strings into major.minor.patch pieces.
      *
-     * @param  string $version
-     * @param  string $prefix
      * @return array<string, int>
      */
     protected function parseVersion(string $version, string $prefix): array
@@ -104,7 +96,7 @@ class DeviceDetector implements StageInterface
         if (preg_match('%(?<major>\d+)((\.(?<minor>\d+)((\.(?<patch>\d+))|$))|$)%', $version, $match)) {
             foreach ($match as $key => $value) {
                 if ($key === 'major' || $key === 'minor' || $key === 'patch') {
-                    $response[$prefix . 'Version' . ucfirst($key)] = (int) $value;
+                    $response[$prefix.'Version'.ucfirst($key)] = (int) $value;
                 }
             }
         }

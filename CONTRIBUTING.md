@@ -29,15 +29,15 @@ This project follows [Conventional Commits](https://www.conventionalcommits.org/
 
 ### Types
 
-| Type       | When to use                                        |
-|------------|----------------------------------------------------|
-| `feat`     | A new feature                                      |
-| `fix`      | A bug fix                                          |
-| `docs`     | Documentation only                                 |
+| Type       | When to use                                             |
+| ---------- | ------------------------------------------------------- |
+| `feat`     | A new feature                                           |
+| `fix`      | A bug fix                                               |
+| `docs`     | Documentation only                                      |
 | `refactor` | Code change that neither fixes a bug nor adds a feature |
-| `test`     | Adding or updating tests                           |
-| `chore`    | Maintenance tasks (deps, CI, config)               |
-| `perf`     | Performance improvements                           |
+| `test`     | Adding or updating tests                                |
+| `chore`    | Maintenance tasks (deps, CI, config)                    |
+| `perf`     | Performance improvements                                |
 
 ### Examples
 

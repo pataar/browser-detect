@@ -3,14 +3,13 @@
 namespace hisorange\BrowserDetect\Test\Stages;
 
 use hisorange\BrowserDetect\Payload;
-use hisorange\BrowserDetect\Test\TestCase;
 use hisorange\BrowserDetect\Stages\CrawlerDetect;
+use hisorange\BrowserDetect\Test\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Test the CrawlerDetect stage.
  *
- * @package            hisorange\BrowserDetect\Test\Stages
  * @coversDefaultClass hisorange\BrowserDetect\Stages\CrawlerDetect
  */
 class CrawlerDetectTest extends TestCase
@@ -18,13 +17,13 @@ class CrawlerDetectTest extends TestCase
     /**
      * @covers ::__invoke()
      *
-     * @param string $agent
-     * @param bool   $expected
+     * @param  string  $agent
+     * @param  bool  $expected
      */
     #[DataProvider('provideAgents')]
-    public function testInvoke($agent, $expected)
+    public function test_invoke($agent, $expected)
     {
-        $stage  = new CrawlerDetect;
+        $stage = new CrawlerDetect;
         $result = new Payload($agent);
 
         $stage($result);

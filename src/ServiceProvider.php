@@ -11,23 +11,19 @@ use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 /**
  * Registers the package as a service provider,
  * also injects the blade directives.
- *
- * @package hisorange\BrowserDetect
  */
 class ServiceProvider extends BaseServiceProvider
 {
     /**
      * Register the custom blade directives.
      *
-     * @inheritDoc
-     *
-     * @return void
+     * {@inheritDoc}
      */
     public function boot(): void
     {
         $this->registerDirectives();
 
-        $source = realpath($raw = __DIR__ . '/../config/browser-detect.php') ?: $raw;
+        $source = realpath($raw = __DIR__.'/../config/browser-detect.php') ?: $raw;
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
@@ -44,7 +40,7 @@ class ServiceProvider extends BaseServiceProvider
     protected function registerDirectives(): void
     {
         foreach (['desktop', 'tablet', 'mobile'] as $directive) {
-            $method = 'is' . ucfirst($directive);
+            $method = 'is'.ucfirst($directive);
             Blade::if($directive, fn () => $this->resolveParser()->detect()->$method());
         }
 
@@ -67,7 +63,7 @@ class ServiceProvider extends BaseServiceProvider
     /**
      * Only binding can occur here!
      *
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function register(): void
     {

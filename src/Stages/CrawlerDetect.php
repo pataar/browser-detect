@@ -2,22 +2,16 @@
 
 namespace hisorange\BrowserDetect\Stages;
 
-use hisorange\BrowserDetect\Contracts\StageInterface;
 use hisorange\BrowserDetect\Contracts\PayloadInterface;
+use hisorange\BrowserDetect\Contracts\StageInterface;
 
 /**
  * Checks if the user agent belongs to bot or crawler.
- *
- * @package hisorange\BrowserDetect\Stages
  */
 class CrawlerDetect implements StageInterface
 {
     protected ?\Jaybizzle\CrawlerDetect\CrawlerDetect $crawler = null;
 
-    /**
-     * @param  PayloadInterface $payload
-     * @return PayloadInterface
-     */
     public function __invoke(PayloadInterface $payload): PayloadInterface
     {
         $this->crawler ??= new \Jaybizzle\CrawlerDetect\CrawlerDetect(

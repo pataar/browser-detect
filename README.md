@@ -94,50 +94,50 @@ Results are cached in memory for the current request and optionally persisted vi
 
 ### Device detection
 
-| Method                  | Returns   | Description                                          |
-|:------------------------|:---------:|:-----------------------------------------------------|
-| `Browser::isMobile()`   | `bool`    | Is this a mobile device?                             |
-| `Browser::isTablet()`   | `bool`    | Is this a tablet device?                             |
-| `Browser::isDesktop()`  | `bool`    | Is this a desktop computer?                          |
-| `Browser::isBot()`      | `bool`    | Is this a crawler / bot?                             |
-| `Browser::deviceType()` | `string`  | One of: `Mobile`, `Tablet`, `Desktop`, `Bot`         |
-| `Browser::deviceFamily()`| `string` | Device vendor (Samsung, Apple, Huawei, ...)          |
-| `Browser::deviceModel()` | `string` | Device model (iPad, iPhone, Nexus, ...)              |
+| Method                    | Returns  | Description                                  |
+| :------------------------ | :------: | :------------------------------------------- |
+| `Browser::isMobile()`     |  `bool`  | Is this a mobile device?                     |
+| `Browser::isTablet()`     |  `bool`  | Is this a tablet device?                     |
+| `Browser::isDesktop()`    |  `bool`  | Is this a desktop computer?                  |
+| `Browser::isBot()`        |  `bool`  | Is this a crawler / bot?                     |
+| `Browser::deviceType()`   | `string` | One of: `Mobile`, `Tablet`, `Desktop`, `Bot` |
+| `Browser::deviceFamily()` | `string` | Device vendor (Samsung, Apple, Huawei, ...)  |
+| `Browser::deviceModel()`  | `string` | Device model (iPad, iPhone, Nexus, ...)      |
 
 ### Browser detection
 
-| Method                          | Returns   | Description                                  |
-|:--------------------------------|:---------:|:---------------------------------------------|
-| `Browser::browserName()`        | `string`  | Human-friendly name (e.g. `Firefox 3.6`)     |
-| `Browser::browserFamily()`      | `string`  | Vendor (Chrome, Firefox, Opera, ...)         |
-| `Browser::browserVersion()`     | `string`  | Version string with trailing `.0` trimmed    |
-| `Browser::browserVersionMajor()`| `int`     | Semantic major version                       |
-| `Browser::browserVersionMinor()`| `int`     | Semantic minor version                       |
-| `Browser::browserVersionPatch()`| `int`     | Semantic patch version                       |
-| `Browser::browserEngine()`      | `string`  | Rendering engine (Blink, WebKit, Gecko, ...) |
-| `Browser::isChrome()`           | `bool`    | Chrome or Chromium?                          |
-| `Browser::isFirefox()`          | `bool`    | Firefox?                                     |
-| `Browser::isOpera()`            | `bool`    | Opera?                                       |
-| `Browser::isSafari()`           | `bool`    | Safari?                                      |
-| `Browser::isEdge()`             | `bool`    | Microsoft Edge?                              |
-| `Browser::isIE()`               | `bool`    | Internet Explorer (or Trident)?              |
-| `Browser::isIEVersion(int, op)` | `bool`    | Compare against a specific IE version        |
-| `Browser::isInApp()`            | `bool`    | In-app browser (WebView, Twitter, WeChat)?   |
+| Method                           | Returns  | Description                                  |
+| :------------------------------- | :------: | :------------------------------------------- |
+| `Browser::browserName()`         | `string` | Human-friendly name (e.g. `Firefox 3.6`)     |
+| `Browser::browserFamily()`       | `string` | Vendor (Chrome, Firefox, Opera, ...)         |
+| `Browser::browserVersion()`      | `string` | Version string with trailing `.0` trimmed    |
+| `Browser::browserVersionMajor()` |  `int`   | Semantic major version                       |
+| `Browser::browserVersionMinor()` |  `int`   | Semantic minor version                       |
+| `Browser::browserVersionPatch()` |  `int`   | Semantic patch version                       |
+| `Browser::browserEngine()`       | `string` | Rendering engine (Blink, WebKit, Gecko, ...) |
+| `Browser::isChrome()`            |  `bool`  | Chrome or Chromium?                          |
+| `Browser::isFirefox()`           |  `bool`  | Firefox?                                     |
+| `Browser::isOpera()`             |  `bool`  | Opera?                                       |
+| `Browser::isSafari()`            |  `bool`  | Safari?                                      |
+| `Browser::isEdge()`              |  `bool`  | Microsoft Edge?                              |
+| `Browser::isIE()`                |  `bool`  | Internet Explorer (or Trident)?              |
+| `Browser::isIEVersion(int, op)`  |  `bool`  | Compare against a specific IE version        |
+| `Browser::isInApp()`             |  `bool`  | In-app browser (WebView, Twitter, WeChat)?   |
 
 ### Operating system detection
 
-| Method                            | Returns   | Description                                |
-|:----------------------------------|:---------:|:-------------------------------------------|
-| `Browser::platformName()`         | `string`  | Human-friendly name (e.g. `Windows 10`)    |
-| `Browser::platformFamily()`       | `string`  | Vendor (Linux, Windows, Mac, ...)          |
-| `Browser::platformVersion()`      | `string`  | Version string with trailing `.0` trimmed  |
-| `Browser::platformVersionMajor()` | `int`     | Semantic major version                     |
-| `Browser::platformVersionMinor()` | `int`     | Semantic minor version                     |
-| `Browser::platformVersionPatch()` | `int`     | Semantic patch version                     |
-| `Browser::isWindows()`            | `bool`    | Windows?                                   |
-| `Browser::isLinux()`              | `bool`    | Linux?                                     |
-| `Browser::isMac()`                | `bool`    | macOS or iOS?                              |
-| `Browser::isAndroid()`            | `bool`    | Android?                                   |
+| Method                            | Returns  | Description                               |
+| :-------------------------------- | :------: | :---------------------------------------- |
+| `Browser::platformName()`         | `string` | Human-friendly name (e.g. `Windows 10`)   |
+| `Browser::platformFamily()`       | `string` | Vendor (Linux, Windows, Mac, ...)         |
+| `Browser::platformVersion()`      | `string` | Version string with trailing `.0` trimmed |
+| `Browser::platformVersionMajor()` |  `int`   | Semantic major version                    |
+| `Browser::platformVersionMinor()` |  `int`   | Semantic minor version                    |
+| `Browser::platformVersionPatch()` |  `int`   | Semantic patch version                    |
+| `Browser::isWindows()`            |  `bool`  | Windows?                                  |
+| `Browser::isLinux()`              |  `bool`  | Linux?                                    |
+| `Browser::isMac()`                |  `bool`  | macOS or iOS?                             |
+| `Browser::isAndroid()`            |  `bool`  | Android?                                  |
 
 ## Configuration
 
@@ -161,11 +161,11 @@ $browser = new Parser(null, null, [
 
 Available options:
 
-| Key                          | Default  | Description                              |
-|:-----------------------------|:--------:|:-----------------------------------------|
-| `cache.interval`             | `10080`  | Cache TTL in seconds                     |
-| `cache.prefix`               | `bd4_`   | Cache key prefix                         |
-| `security.max-header-length` | `2048`   | Max user agent length (DoS protection)   |
+| Key                          | Default | Description                            |
+| :--------------------------- | :-----: | :------------------------------------- |
+| `cache.interval`             | `10080` | Cache TTL in seconds                   |
+| `cache.prefix`               | `bd4_`  | Cache key prefix                       |
+| `security.max-header-length` | `2048`  | Max user agent length (DoS protection) |
 
 ## Quality
 
@@ -176,6 +176,7 @@ This package aims for 100% test coverage and PHPStan level `max` with zero basel
 This package was originally created by [Varga Zsolt (hisorange)](https://github.com/hisorange). This fork is maintained by [Pieter Willekens (pataar)](https://github.com/pataar).
 
 Detection is powered by:
+
 - [jaybizzle/crawler-detect](https://github.com/JayBizzle/Crawler-Detect) — Bot and crawler detection
 - [matomo/device-detector](https://github.com/matomo-org/device-detector) — Comprehensive device, browser, and OS parsing
 

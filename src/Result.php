@@ -9,8 +9,6 @@ use hisorange\BrowserDetect\Contracts\ResultInterface;
  * result of the parsing, this is necessary
  * to allow us to change the implementation
  * behind the values.
- *
- * @package hisorange\BrowserDetect
  */
 class Result implements ResultInterface
 {
@@ -65,7 +63,7 @@ class Result implements ResultInterface
     protected $isEdge = false;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $isInApp = false;
 
@@ -170,7 +168,7 @@ class Result implements ResultInterface
     protected $deviceModel = '';
 
     /**
-     * @param array<string, mixed> $result
+     * @param  array<string, mixed>  $result
      */
     public function __construct(array $result)
     {
@@ -180,7 +178,7 @@ class Result implements ResultInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function userAgent(): string
     {
@@ -188,7 +186,7 @@ class Result implements ResultInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isMobile(): bool
     {
@@ -196,7 +194,7 @@ class Result implements ResultInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isTablet(): bool
     {
@@ -204,7 +202,7 @@ class Result implements ResultInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isDesktop(): bool
     {
@@ -212,7 +210,7 @@ class Result implements ResultInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isBot(): bool
     {
@@ -220,7 +218,7 @@ class Result implements ResultInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function deviceType(): string
     {
@@ -241,7 +239,7 @@ class Result implements ResultInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isChrome(): bool
     {
@@ -249,7 +247,7 @@ class Result implements ResultInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isFirefox(): bool
     {
@@ -257,7 +255,7 @@ class Result implements ResultInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isOpera(): bool
     {
@@ -265,7 +263,7 @@ class Result implements ResultInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isSafari(): bool
     {
@@ -273,7 +271,7 @@ class Result implements ResultInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function isEdge(): bool
     {
@@ -281,7 +279,7 @@ class Result implements ResultInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isInApp(): bool
     {
@@ -289,7 +287,7 @@ class Result implements ResultInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isIE(): bool
     {
@@ -297,15 +295,15 @@ class Result implements ResultInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isIEVersion(int $version, string $operator = '='): bool
     {
-        return ($this->isIE && version_compare($this->browserVersion, (string) $version, $operator));
+        return $this->isIE && version_compare($this->browserVersion, (string) $version, $operator);
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function browserVersion(): string
     {
@@ -313,7 +311,7 @@ class Result implements ResultInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function browserName(): string
     {
@@ -321,7 +319,7 @@ class Result implements ResultInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function browserFamily(): string
     {
@@ -329,7 +327,7 @@ class Result implements ResultInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function browserVersionMajor(): int
     {
@@ -337,7 +335,7 @@ class Result implements ResultInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function browserVersionMinor(): int
     {
@@ -345,7 +343,7 @@ class Result implements ResultInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function browserVersionPatch(): int
     {
@@ -353,7 +351,7 @@ class Result implements ResultInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function browserEngine(): string
     {
@@ -361,7 +359,7 @@ class Result implements ResultInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function platformName(): string
     {
@@ -369,7 +367,7 @@ class Result implements ResultInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function platformFamily(): string
     {
@@ -377,7 +375,7 @@ class Result implements ResultInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function platformVersion(): string
     {
@@ -385,7 +383,7 @@ class Result implements ResultInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function platformVersionMajor(): int
     {
@@ -393,7 +391,7 @@ class Result implements ResultInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function platformVersionMinor(): int
     {
@@ -401,7 +399,7 @@ class Result implements ResultInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isWindows(): bool
     {
@@ -409,7 +407,7 @@ class Result implements ResultInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isLinux(): bool
     {
@@ -417,7 +415,7 @@ class Result implements ResultInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isMac(): bool
     {
@@ -425,7 +423,7 @@ class Result implements ResultInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isAndroid(): bool
     {
@@ -433,7 +431,7 @@ class Result implements ResultInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function platformVersionPatch(): int
     {
@@ -441,7 +439,7 @@ class Result implements ResultInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function deviceFamily(): string
     {
@@ -449,7 +447,7 @@ class Result implements ResultInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function deviceModel(): string
     {

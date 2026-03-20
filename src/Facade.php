@@ -42,12 +42,11 @@ use Illuminate\Support\Facades\Facade as BaseFacade;
  * @method static int platformVersionPatch()
  *
  * @example Browser::isMobile();
- * @package hisorange\BrowserDetect
  */
 class Facade extends BaseFacade
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected static function getFacadeAccessor(): string
     {

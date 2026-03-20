@@ -2,19 +2,19 @@
 
 namespace hisorange\BrowserDetect\Test\Stages;
 
+use hisorange\BrowserDetect\Contracts\ResultInterface;
 use hisorange\BrowserDetect\Payload;
 use hisorange\BrowserDetect\Result;
-use hisorange\BrowserDetect\Test\TestCase;
 use hisorange\BrowserDetect\Stages\BrowserDetect;
-use hisorange\BrowserDetect\Contracts\ResultInterface;
+use hisorange\BrowserDetect\Test\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\ExpectationFailedException;
 use SebastianBergmann\RecursionContext\InvalidArgumentException;
 
 /**
  * Test the BrowserDetect stage.
  *
- * @package            hisorange\BrowserDetect\Test\Stages
  * @coversDefaultClass hisorange\BrowserDetect\Stages\BrowserDetect
  */
 class BrowserDetectTest extends TestCase
@@ -22,24 +22,24 @@ class BrowserDetectTest extends TestCase
     /**
      * @covers ::__invoke()
      *
-     * @param array $scenario
-     * @param array $expectations
+     * @param  array  $scenario
+     * @param  array  $expectations
      *
-     * @throws \PHPUnit\Framework\Exception
+     * @throws Exception
      * @throws \PHPUnit_Framework_Exception
      */
     #[DataProvider('provideScenarios')]
-    public function testInvoke($scenario, $expectations)
+    public function test_invoke($scenario, $expectations)
     {
-        $stage  = new BrowserDetect;
+        $stage = new BrowserDetect;
         $payload = new Payload('Unknown');
 
         foreach ($scenario as $k => $v) {
             $payload->setValue($k, $v);
         }
 
-		$payload = $stage($payload);
-		$result = new Result($payload->toArray());
+        $payload = $stage($payload);
+        $result = new Result($payload->toArray());
 
         $this->assertInstanceOf(ResultInterface::class, $result);
 
@@ -53,13 +53,13 @@ class BrowserDetectTest extends TestCase
      *
      * @return void
      */
-    public function testPrerenderBot()
+    public function test_prerender_bot()
     {
-        $stage  = new BrowserDetect;
+        $stage = new BrowserDetect;
         $payload = new Payload('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/W.X.Y.Z Safari/537.36 Prerender (+https://github.com/prerender/prerender)');
 
-		$payload = $stage($payload);
-		$result = new Result($payload->toArray());
+        $payload = $stage($payload);
+        $result = new Result($payload->toArray());
 
         $this->assertTrue($result->isBot());
         $this->assertFalse($result->isMobile());
@@ -72,14 +72,14 @@ class BrowserDetectTest extends TestCase
      *
      * @return void
      */
-    public function testPrerenderMobileBot()
+    public function test_prerender_mobile_bot()
     {
-        $stage  = new BrowserDetect;
-        $payload = new Payload('Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko)' .
+        $stage = new BrowserDetect;
+        $payload = new Payload('Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko)'.
             'Chrome/W.X.Y.Z Mobile Safari/537.36 Prerender (+https://github.com/prerender/prerender)');
 
-		$payload = $stage($payload);
-		$result = new Result($payload->toArray());
+        $payload = $stage($payload);
+        $result = new Result($payload->toArray());
 
         $this->assertTrue($result->isBot());
         $this->assertTrue($result->isMobile());
@@ -91,34 +91,35 @@ class BrowserDetectTest extends TestCase
      * Check for WebView inApp browsers.
      *
      * @return void
+     *
      * @throws ExpectationFailedException
      * @throws InvalidArgumentException
      */
-    public function testInAppWebView()
+    public function test_in_app_web_view()
     {
-        $stage  = new BrowserDetect;
+        $stage = new BrowserDetect;
         $payload = new Payload('WebView');
 
-		$payload = $stage($payload);
-		$result = new Result($payload->toArray());
+        $payload = $stage($payload);
+        $result = new Result($payload->toArray());
 
         $this->assertTrue($result->isInApp());
 
-        $stage  = new BrowserDetect;
-        $payload = new Payload('Mozilla/5.0 (iPhone; CPU iPhone OS 10_0_1 like Mac OS X) ' .
+        $stage = new BrowserDetect;
+        $payload = new Payload('Mozilla/5.0 (iPhone; CPU iPhone OS 10_0_1 like Mac OS X) '.
             'AppleWebKit/602.1.32 (KHTML, like Gecko) Mobile/14A403 Twitter for iPhone');
 
-				$payload = $stage($payload);
-		$result = new Result($payload->toArray());
+        $payload = $stage($payload);
+        $result = new Result($payload->toArray());
 
         $this->assertTrue($result->isInApp());
 
-        $stage  = new BrowserDetect;
-        $payload = new Payload('Mozilla/5.0 (iPhone; CPU iPhone OS 10_1_1 like Mac OS X) ' .
+        $stage = new BrowserDetect;
+        $payload = new Payload('Mozilla/5.0 (iPhone; CPU iPhone OS 10_1_1 like Mac OS X) '.
             'AppleWebKit/602.2.14 (KHTML, like Gecko) Mobile/14B100 MicroMessenger/6.3.30 NetType/WIFI Language/en');
 
-				$payload = $stage($payload);
-		$result = new Result($payload->toArray());
+        $payload = $stage($payload);
+        $result = new Result($payload->toArray());
 
         $this->assertTrue($result->isInApp());
     }
@@ -127,16 +128,17 @@ class BrowserDetectTest extends TestCase
      * Check for Apple inApp browsers.
      *
      * @return void
+     *
      * @throws ExpectationFailedException
      * @throws InvalidArgumentException
      */
-    public function testInAppApple()
+    public function test_in_app_apple()
     {
-        $stage  = new BrowserDetect;
-        $payload = new Payload('Mozilla/5.0 (iPhone; CPU iPhone OS 9_3_5 like Mac OS X) ' .
+        $stage = new BrowserDetect;
+        $payload = new Payload('Mozilla/5.0 (iPhone; CPU iPhone OS 9_3_5 like Mac OS X) '.
             'AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13G36');
-		$payload = $stage($payload);
-		$result = new Result($payload->toArray());
+        $payload = $stage($payload);
+        $result = new Result($payload->toArray());
         $this->assertTrue($result->isInApp());
     }
 
@@ -144,37 +146,38 @@ class BrowserDetectTest extends TestCase
      * Check for Andorid inApp browsers.
      *
      * @return void
+     *
      * @throws ExpectationFailedException
      * @throws InvalidArgumentException
      */
-    public function testInAppAndroid()
+    public function test_in_app_android()
     {
-        $stage  = new BrowserDetect;
-        $payload = new Payload('Mozilla/5.0 (Linux; Android 5.1.1; Nexus 5 Build/LMY48B; wv) ' .
+        $stage = new BrowserDetect;
+        $payload = new Payload('Mozilla/5.0 (Linux; Android 5.1.1; Nexus 5 Build/LMY48B; wv) '.
             'AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/43.0.2357.65 Mobile Safari/537.36');
-		$payload = $stage($payload);
-		$result = new Result($payload->toArray());
+        $payload = $stage($payload);
+        $result = new Result($payload->toArray());
         $this->assertTrue($result->isInApp());
     }
 
-    public function testNotInApp()
+    public function test_not_in_app()
     {
-        $stage   = new BrowserDetect;
+        $stage = new BrowserDetect;
         $payload = new Payload('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36');
 
         $payload = $stage($payload);
-        $result  = new Result($payload->toArray());
+        $result = new Result($payload->toArray());
 
         $this->assertFalse($result->isInApp());
     }
 
-    public function testNullBrowserFamilyDoesNotSetAnyBrowserFlag()
+    public function test_null_browser_family_does_not_set_any_browser_flag()
     {
-        $stage   = new BrowserDetect;
+        $stage = new BrowserDetect;
         $payload = new Payload('Unknown');
 
         $payload = $stage($payload);
-        $result  = new Result($payload->toArray());
+        $result = new Result($payload->toArray());
 
         $this->assertFalse($result->isChrome());
         $this->assertFalse($result->isFirefox());
@@ -184,13 +187,13 @@ class BrowserDetectTest extends TestCase
         $this->assertFalse($result->isEdge());
     }
 
-    public function testNullPlatformFamilyDoesNotSetAnyPlatformFlag()
+    public function test_null_platform_family_does_not_set_any_platform_flag()
     {
-        $stage   = new BrowserDetect;
+        $stage = new BrowserDetect;
         $payload = new Payload('Unknown');
 
         $payload = $stage($payload);
-        $result  = new Result($payload->toArray());
+        $result = new Result($payload->toArray());
 
         $this->assertFalse($result->isWindows());
         $this->assertFalse($result->isLinux());
@@ -209,85 +212,85 @@ class BrowserDetectTest extends TestCase
             [
                 [
                     'isDesktop' => true,
-                    'isTablet'  => true,
-                    'isMobile'  => true,
+                    'isTablet' => true,
+                    'isMobile' => true,
                 ],
                 [
                     'isDesktop' => false,
-                    'isTablet'  => true,
-                    'isMobile'  => false,
+                    'isTablet' => true,
+                    'isMobile' => false,
                 ],
             ],
             [
                 [
                     'isDesktop' => true,
-                    'isTablet'  => true,
-                    'isMobile'  => false,
+                    'isTablet' => true,
+                    'isMobile' => false,
                 ],
                 [
                     'isDesktop' => false,
-                    'isTablet'  => true,
-                    'isMobile'  => false,
+                    'isTablet' => true,
+                    'isMobile' => false,
                 ],
             ],
             [
                 [
                     'isDesktop' => true,
-                    'isTablet'  => false,
-                    'isMobile'  => false,
+                    'isTablet' => false,
+                    'isMobile' => false,
                 ],
                 [
                     'isDesktop' => true,
-                    'isTablet'  => false,
-                    'isMobile'  => false,
+                    'isTablet' => false,
+                    'isMobile' => false,
                 ],
             ],
             [
                 [
                     'isDesktop' => false,
-                    'isTablet'  => false,
-                    'isMobile'  => true,
+                    'isTablet' => false,
+                    'isMobile' => true,
                 ],
                 [
                     'isDesktop' => false,
-                    'isTablet'  => false,
-                    'isMobile'  => true,
+                    'isTablet' => false,
+                    'isMobile' => true,
                 ],
             ],
             [
                 [
                     'isDesktop' => true,
-                    'isTablet'  => false,
-                    'isMobile'  => true,
+                    'isTablet' => false,
+                    'isMobile' => true,
                 ],
                 [
                     'isDesktop' => false,
-                    'isTablet'  => false,
-                    'isMobile'  => true,
+                    'isTablet' => false,
+                    'isMobile' => true,
                 ],
             ],
             [
                 [
                     'isDesktop' => false,
-                    'isTablet'  => true,
-                    'isMobile'  => true,
+                    'isTablet' => true,
+                    'isMobile' => true,
                 ],
                 [
                     'isDesktop' => false,
-                    'isTablet'  => true,
-                    'isMobile'  => false,
+                    'isTablet' => true,
+                    'isMobile' => false,
                 ],
             ],
             [
                 [
                     'isDesktop' => true,
-                    'isTablet'  => false,
-                    'isMobile'  => false,
+                    'isTablet' => false,
+                    'isMobile' => false,
                 ],
                 [
                     'isDesktop' => true,
-                    'isTablet'  => false,
-                    'isMobile'  => false,
+                    'isTablet' => false,
+                    'isMobile' => false,
                 ],
             ],
         ];

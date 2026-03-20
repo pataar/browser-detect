@@ -2,17 +2,15 @@
 
 namespace hisorange\BrowserDetect;
 
-use hisorange\BrowserDetect\Contracts\StageInterface;
-use Illuminate\Http\Request;
-use Illuminate\Cache\CacheManager;
 use hisorange\BrowserDetect\Contracts\ParserInterface;
 use hisorange\BrowserDetect\Contracts\ResultInterface;
+use hisorange\BrowserDetect\Contracts\StageInterface;
 use hisorange\BrowserDetect\Exceptions\BadMethodCallException;
+use Illuminate\Cache\CacheManager;
+use Illuminate\Http\Request;
 
 /**
  * Manages the parsing mechanism.
- *
- * @package hisorange\BrowserDetect
  */
 final class Parser implements ParserInterface
 {
@@ -57,14 +55,12 @@ final class Parser implements ParserInterface
     /**
      * Parser constructor.
      *
-     * @param CacheManager|null $cache
-     * @param Request|null      $request
-     * @param array<string, mixed> $config
+     * @param  array<string, mixed>  $config
      */
     public function __construct(?CacheManager $cache = null, ?Request $request = null, array $config = [])
     {
         if ($cache !== null) {
-            $this->cache   = $cache;
+            $this->cache = $cache;
         }
 
         if ($request !== null) {
@@ -72,7 +68,7 @@ final class Parser implements ParserInterface
         }
 
         /** @var array<string, mixed> $defaults */
-        $defaults = require __DIR__ . '/../config/browser-detect.php';
+        $defaults = require __DIR__.'/../config/browser-detect.php';
 
         /** @var array<string, mixed> $merged */
         $merged = array_replace_recursive($defaults, $config);
@@ -81,9 +77,9 @@ final class Parser implements ParserInterface
         $this->runtime = [];
 
         $this->pipeline = [
-            new Stages\CrawlerDetect(),
-            new Stages\DeviceDetector(),
-            new Stages\BrowserDetect(),
+            new Stages\CrawlerDetect,
+            new Stages\DeviceDetector,
+            new Stages\BrowserDetect,
         ];
     }
 
@@ -100,12 +96,11 @@ final class Parser implements ParserInterface
     /**
      * Reflect calls to the result object.
      *
-     * @throws \hisorange\BrowserDetect\Exceptions\BadMethodCallException
      *
-     * @param string $method
-     * @param array<int, mixed>  $params
-     *
+     * @param  array<int, mixed>  $params
      * @return mixed
+     *
+     * @throws BadMethodCallException
      */
     public function __call(string $method, array $params)
     {
@@ -125,23 +120,21 @@ final class Parser implements ParserInterface
     /**
      * Acts as a facade, but proxies all the call to a singleton.
      *
-     * @param string $method
-     * @param array<int, mixed> $params
-     *
+     * @param  array<int, mixed>  $params
      * @return mixed
      */
     public static function __callStatic(string $method, array $params)
     {
-        if (!static::$instance) {
-            static::$instance = new static();
+        if (! self::$instance) {
+            self::$instance = new self;
         }
 
         /* @phpstan-ignore-next-line */
-        return call_user_func_array([static::$instance, $method], $params);
+        return call_user_func_array([self::$instance, $method], $params);
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function detect(): ResultInterface
     {
@@ -158,8 +151,6 @@ final class Parser implements ParserInterface
     /**
      * Wrapper around the request accessor, in standalone mode
      * the fn will use the $_SERVER global.
-     *
-     * @return string
      */
     protected function getUserAgentString(): string
     {
@@ -171,13 +162,13 @@ final class Parser implements ParserInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function parse(string $agent): ResultInterface
     {
         $key = $this->makeHashKey($agent);
 
-        if (!isset($this->runtime[$key])) {
+        if (! isset($this->runtime[$key])) {
             // In standalone mode, You can run the parser without a cache.
             if ($this->cache !== null) {
                 /** @var ResultInterface $result */
@@ -200,13 +191,10 @@ final class Parser implements ParserInterface
 
     /**
      * Create a unique cache key for the user agent.
-     *
-     * @param  string $agent
-     * @return string
      */
     protected function makeHashKey(string $agent): string
     {
-        return $this->cacheConfig()['prefix'] . hash('xxh128', $agent);
+        return $this->cacheConfig()['prefix'].hash('xxh128', $agent);
     }
 
     /**
@@ -229,9 +217,6 @@ final class Parser implements ParserInterface
 
     /**
      * Pipe the payload through the stages.
-     *
-     * @param  string $agent
-     * @return ResultInterface
      */
     protected function process(string $agent): ResultInterface
     {

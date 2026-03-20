@@ -1,11 +1,12 @@
 <?php
+
 namespace hisorange\BrowserDetect\Test;
 
 use hisorange\BrowserDetect\Payload;
 
 /**
  * Class PayloadTest
- * @package            hisorange\BrowserDetect\Test
+ *
  * @coversDefaultClass hisorange\BrowserDetect\Payload
  */
 class PayloadTest extends TestCase
@@ -14,7 +15,7 @@ class PayloadTest extends TestCase
      * @covers ::__construct()
      * @covers ::getAgent()
      */
-    public function testGetAgent()
+    public function test_get_agent()
     {
         $payload = new Payload('test');
         $this->assertSame('test', $payload->getAgent());
@@ -25,14 +26,14 @@ class PayloadTest extends TestCase
      * @covers ::setValue()
      * @covers ::toArray()
      */
-    public function testApi()
+    public function test_api()
     {
         $payload = new Payload('test');
         $payload->setValue('a', 'b');
 
         $this->assertSame('b', $payload->getValue('a'));
         $this->assertSame([
-            'a'         => 'b',
+            'a' => 'b',
             'userAgent' => 'test',
         ], $payload->toArray());
 
@@ -42,7 +43,7 @@ class PayloadTest extends TestCase
     /**
      * @covers ::setValue()
      */
-    public function testSetValueIgnoresNull()
+    public function test_set_value_ignores_null()
     {
         $payload = new Payload('test');
         $payload->setValue('key', 'value');
@@ -54,7 +55,7 @@ class PayloadTest extends TestCase
     /**
      * @covers ::setValue()
      */
-    public function testSetValueNullDoesNotCreate()
+    public function test_set_value_null_does_not_create()
     {
         $payload = new Payload('test');
         $payload->setValue('key', null);
