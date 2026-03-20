@@ -38,4 +38,28 @@ class PayloadTest extends TestCase
 
         $this->assertNull($payload->getValue('non'));
     }
+
+    /**
+     * @covers ::setValue()
+     */
+    public function testSetValueIgnoresNull()
+    {
+        $payload = new Payload('test');
+        $payload->setValue('key', 'value');
+        $payload->setValue('key', null);
+
+        $this->assertSame('value', $payload->getValue('key'));
+    }
+
+    /**
+     * @covers ::setValue()
+     */
+    public function testSetValueNullDoesNotCreate()
+    {
+        $payload = new Payload('test');
+        $payload->setValue('key', null);
+
+        $this->assertNull($payload->getValue('key'));
+        $this->assertArrayNotHasKey('key', $payload->toArray());
+    }
 }

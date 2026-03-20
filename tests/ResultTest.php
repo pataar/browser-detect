@@ -369,4 +369,51 @@ class ResultTest extends TestCase
         $this->assertSame($result->platformFamily(), 'GNU/Linux');
         $this->assertSame($result->isLinux(), true);
     }
+
+    public function testDeviceTypeMobile()
+    {
+        $result = new Result(['isMobile' => true]);
+        $this->assertSame('Mobile', $result->deviceType());
+    }
+
+    public function testDeviceTypeTablet()
+    {
+        $result = new Result(['isTablet' => true]);
+        $this->assertSame('Tablet', $result->deviceType());
+    }
+
+    public function testDeviceTypeBot()
+    {
+        $result = new Result(['isBot' => true]);
+        $this->assertSame('Bot', $result->deviceType());
+    }
+
+    public function testDeviceTypeDesktop()
+    {
+        $result = new Result(['isDesktop' => true]);
+        $this->assertSame('Desktop', $result->deviceType());
+    }
+
+    public function testDeviceTypeUnknown()
+    {
+        $result = new Result([]);
+        $this->assertSame('Unknown', $result->deviceType());
+    }
+
+    public function testDeviceTypePriority()
+    {
+        // Mobile takes priority over Desktop
+        $result = new Result(['isMobile' => true, 'isDesktop' => true]);
+        $this->assertSame('Mobile', $result->deviceType());
+    }
+
+    public function testIsIEVersionWhenNotIE()
+    {
+        $result = new Result([
+            'isIE'           => false,
+            'browserVersion' => 6,
+        ]);
+
+        $this->assertFalse($result->isIEVersion(6, '='));
+    }
 }
