@@ -11,6 +11,8 @@ A Laravel package to identify the visitor's browser, operating system, and devic
 
 > **Fork notice:** This is a maintained fork of [hisorange/browser-detect](https://github.com/hisorange/browser-detect) by [Varga Zsolt](https://github.com/hisorange), which appears to be abandoned. Full credit to the original author for the design and initial implementation. This fork keeps the package compatible with modern PHP and Laravel versions.
 
+> **Upgrading to 6.x?** `isMac()` no longer returns `true` for iOS — use the new `isiOS()` method instead. See [UPGRADING.md](UPGRADING.md) for all breaking changes.
+
 ## Requirements
 
 - PHP 8.3+
@@ -45,7 +47,7 @@ if (Browser::isFirefox() || Browser::isOpera()) {
 
 if (Browser::isAndroid()) {
     $response .= '<a>Install our Android App!</a>';
-} elseif (Browser::isMac() && Browser::isMobile()) {
+} elseif (Browser::isiOS()) {
     $response .= '<a>Install our iOS App!</a>';
 }
 ```
@@ -94,35 +96,43 @@ Results are cached in memory for the current request and optionally persisted vi
 
 ### Device detection
 
-| Method                    | Returns  | Description                                  |
-| :------------------------ | :------: | :------------------------------------------- |
-| `Browser::isMobile()`     |  `bool`  | Is this a mobile device?                     |
-| `Browser::isTablet()`     |  `bool`  | Is this a tablet device?                     |
-| `Browser::isDesktop()`    |  `bool`  | Is this a desktop computer?                  |
-| `Browser::isBot()`        |  `bool`  | Is this a crawler / bot?                     |
-| `Browser::deviceType()`   | `string` | One of: `Mobile`, `Tablet`, `Desktop`, `Bot` |
-| `Browser::deviceFamily()` | `string` | Device vendor (Samsung, Apple, Huawei, ...)  |
-| `Browser::deviceModel()`  | `string` | Device model (iPad, iPhone, Nexus, ...)      |
+| Method                    | Returns  | Description                                                               |
+| :------------------------ | :------: | :------------------------------------------------------------------------ |
+| `Browser::isMobile()`     |  `bool`  | Is this a mobile device?                                                  |
+| `Browser::isTablet()`     |  `bool`  | Is this a tablet device?                                                  |
+| `Browser::isDesktop()`    |  `bool`  | Is this a desktop computer?                                               |
+| `Browser::isBot()`        |  `bool`  | Is this a crawler / bot?                                                  |
+| `Browser::isTV()`         |  `bool`  | Is this a TV device?                                                      |
+| `Browser::isConsole()`    |  `bool`  | Is this a game console?                                                   |
+| `Browser::isWearable()`   |  `bool`  | Is this a wearable device?                                                |
+| `Browser::deviceType()`   | `string` | One of: `Mobile`, `Tablet`, `Desktop`, `Bot`, `TV`, `Console`, `Wearable` |
+| `Browser::deviceFamily()` | `string` | Device vendor (Samsung, Apple, Huawei, ...)                               |
+| `Browser::deviceModel()`  | `string` | Device model (iPad, iPhone, Nexus, ...)                                   |
 
 ### Browser detection
 
-| Method                           | Returns  | Description                                  |
-| :------------------------------- | :------: | :------------------------------------------- |
-| `Browser::browserName()`         | `string` | Human-friendly name (e.g. `Firefox 3.6`)     |
-| `Browser::browserFamily()`       | `string` | Vendor (Chrome, Firefox, Opera, ...)         |
-| `Browser::browserVersion()`      | `string` | Version string with trailing `.0` trimmed    |
-| `Browser::browserVersionMajor()` |  `int`   | Semantic major version                       |
-| `Browser::browserVersionMinor()` |  `int`   | Semantic minor version                       |
-| `Browser::browserVersionPatch()` |  `int`   | Semantic patch version                       |
-| `Browser::browserEngine()`       | `string` | Rendering engine (Blink, WebKit, Gecko, ...) |
-| `Browser::isChrome()`            |  `bool`  | Chrome or Chromium?                          |
-| `Browser::isFirefox()`           |  `bool`  | Firefox?                                     |
-| `Browser::isOpera()`             |  `bool`  | Opera?                                       |
-| `Browser::isSafari()`            |  `bool`  | Safari?                                      |
-| `Browser::isEdge()`              |  `bool`  | Microsoft Edge?                              |
-| `Browser::isIE()`                |  `bool`  | Internet Explorer (or Trident)?              |
-| `Browser::isIEVersion(int, op)`  |  `bool`  | Compare against a specific IE version        |
-| `Browser::isInApp()`             |  `bool`  | In-app browser (WebView, Twitter, WeChat)?   |
+| Method                           | Returns  | Description                                                                                                            |
+| :------------------------------- | :------: | :--------------------------------------------------------------------------------------------------------------------- |
+| `Browser::browserName()`         | `string` | Human-friendly name (e.g. `Firefox 3.6`)                                                                               |
+| `Browser::browserFamily()`       | `string` | Vendor (Chrome, Firefox, Opera, ...)                                                                                   |
+| `Browser::browserVersion()`      | `string` | Version string with trailing `.0` trimmed                                                                              |
+| `Browser::browserVersionMajor()` |  `int`   | Semantic major version                                                                                                 |
+| `Browser::browserVersionMinor()` |  `int`   | Semantic minor version                                                                                                 |
+| `Browser::browserVersionPatch()` |  `int`   | Semantic patch version                                                                                                 |
+| `Browser::browserEngine()`       | `string` | Rendering engine (Blink, WebKit, Gecko, ...)                                                                           |
+| `Browser::isChrome()`            |  `bool`  | Chrome or Chromium?                                                                                                    |
+| `Browser::isFirefox()`           |  `bool`  | Firefox?                                                                                                               |
+| `Browser::isOpera()`             |  `bool`  | Opera?                                                                                                                 |
+| `Browser::isSafari()`            |  `bool`  | Safari?                                                                                                                |
+| `Browser::isEdge()`              |  `bool`  | Microsoft Edge?                                                                                                        |
+| `Browser::isIE()`                |  `bool`  | Internet Explorer (or Trident)?                                                                                        |
+| `Browser::isIEVersion(int, op)`  |  `bool`  | Compare against a specific IE version                                                                                  |
+| `Browser::isBrave()`             |  `bool`  | Brave?                                                                                                                 |
+| `Browser::isVivaldi()`           |  `bool`  | Vivaldi?                                                                                                               |
+| `Browser::isSamsungBrowser()`    |  `bool`  | Samsung Internet?                                                                                                      |
+| `Browser::isArc()`               |  `bool`  | Arc?                                                                                                                   |
+| `Browser::isDuckDuckGo()`        |  `bool`  | DuckDuckGo Privacy Browser?                                                                                            |
+| `Browser::isInApp()`             |  `bool`  | In-app browser? (WebView, Twitter, WeChat, Facebook, Instagram, TikTok, Snapchat, LinkedIn, Telegram, Line, Pinterest) |
 
 ### Operating system detection
 
@@ -136,7 +146,10 @@ Results are cached in memory for the current request and optionally persisted vi
 | `Browser::platformVersionPatch()` |  `int`   | Semantic patch version                    |
 | `Browser::isWindows()`            |  `bool`  | Windows?                                  |
 | `Browser::isLinux()`              |  `bool`  | Linux?                                    |
-| `Browser::isMac()`                |  `bool`  | macOS or iOS?                             |
+| `Browser::isMac()`                |  `bool`  | macOS?                                    |
+| `Browser::isiOS()`                |  `bool`  | iOS?                                      |
+| `Browser::isChromeOS()`           |  `bool`  | Chrome OS?                                |
+| `Browser::isHarmonyOS()`          |  `bool`  | HarmonyOS?                                |
 | `Browser::isAndroid()`            |  `bool`  | Android?                                  |
 
 ## Configuration

@@ -74,6 +74,20 @@ class DeviceDetectorTest extends TestCase
                     'isMobile' => true,
                 ],
             ],
+            // Smart TV (Samsung Tizen)
+            [
+                'Mozilla/5.0 (SMART-TV; LINUX; Tizen 5.0) AppleWebKit/537.36 (KHTML, like Gecko) Version/5.0 TV Safari/537.36',
+                [
+                    'isTV' => true,
+                ],
+            ],
+            // Game console (PlayStation 5)
+            [
+                'Mozilla/5.0 (PlayStation 5 5.02) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0 Safari/605.1.15',
+                [
+                    'isConsole' => true,
+                ],
+            ],
         ];
     }
 

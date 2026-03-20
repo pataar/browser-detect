@@ -45,11 +45,19 @@ class ResultTest extends TestCase
             'isTablet' => false,
             'isDesktop' => false,
             'isBot' => false,
+            'isTV' => false,
+            'isConsole' => false,
+            'isWearable' => false,
             'isChrome' => false,
             'isFirefox' => false,
             'isOpera' => false,
             'isSafari' => false,
             'isEdge' => false,
+            'isBrave' => false,
+            'isVivaldi' => false,
+            'isSamsungBrowser' => false,
+            'isArc' => false,
+            'isDuckDuckGo' => false,
             'isInApp' => false,
             'isIE' => false,
             'browserName' => 'Unknown',
@@ -68,6 +76,9 @@ class ResultTest extends TestCase
             'isWindows' => false,
             'isLinux' => false,
             'isMac' => false,
+            'isiOS' => false,
+            'isChromeOS' => false,
+            'isHarmonyOS' => false,
             'isAndroid' => false,
             'deviceFamily' => 'Unknown',
             'deviceModel' => '',
@@ -129,11 +140,19 @@ class ResultTest extends TestCase
         $this->assertSame((bool) $value, $result->isTablet());
         $this->assertSame((bool) $value, $result->isDesktop());
         $this->assertSame((bool) $value, $result->isBot());
+        $this->assertSame((bool) $value, $result->isTV());
+        $this->assertSame((bool) $value, $result->isConsole());
+        $this->assertSame((bool) $value, $result->isWearable());
         $this->assertSame((bool) $value, $result->isChrome());
         $this->assertSame((bool) $value, $result->isFirefox());
         $this->assertSame((bool) $value, $result->isOpera());
         $this->assertSame((bool) $value, $result->isSafari());
         $this->assertSame((bool) $value, $result->isIE());
+        $this->assertSame((bool) $value, $result->isBrave());
+        $this->assertSame((bool) $value, $result->isVivaldi());
+        $this->assertSame((bool) $value, $result->isSamsungBrowser());
+        $this->assertSame((bool) $value, $result->isArc());
+        $this->assertSame((bool) $value, $result->isDuckDuckGo());
         $this->assertSame((bool) $value, $result->isInApp());
         $this->assertSame($value, $result->browserName());
         $this->assertSame($value, $result->browserFamily());
@@ -151,6 +170,9 @@ class ResultTest extends TestCase
         $this->assertSame((bool) $value, $result->isWindows());
         $this->assertSame((bool) $value, $result->isLinux());
         $this->assertSame((bool) $value, $result->isMac());
+        $this->assertSame((bool) $value, $result->isiOS());
+        $this->assertSame((bool) $value, $result->isChromeOS());
+        $this->assertSame((bool) $value, $result->isHarmonyOS());
         $this->assertSame((bool) $value, $result->isAndroid());
         $this->assertSame($value, $result->deviceFamily());
         $this->assertSame($value, $result->deviceModel());
@@ -167,11 +189,19 @@ class ResultTest extends TestCase
             'isTablet',
             'isDesktop',
             'isBot',
+            'isTV',
+            'isConsole',
+            'isWearable',
             'isChrome',
             'isFirefox',
             'isOpera',
             'isSafari',
             'isEdge',
+            'isBrave',
+            'isVivaldi',
+            'isSamsungBrowser',
+            'isArc',
+            'isDuckDuckGo',
             'isInApp',
             'isIE',
             'browserName',
@@ -190,6 +220,9 @@ class ResultTest extends TestCase
             'isWindows',
             'isLinux',
             'isMac',
+            'isiOS',
+            'isChromeOS',
+            'isHarmonyOS',
             'isAndroid',
             'deviceFamily',
             'deviceModel',
@@ -309,13 +342,52 @@ class ResultTest extends TestCase
         $this->assertSame($result->isEdge(), true);
     }
 
-    public function test_samsung_browser()
+    public function test_samsung_browser_family()
     {
         $parser = $this->app->make('browser-detect');
-        $agent = 'Mozilla/5.0 (Linux; Android 9; SAMSUNG SM-G960U) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/10.2 Chrome/71.0.3578.99 Mobile Safari/537.36';
+        $agent = 'Mozilla/5.0 (Linux; Android 13; SAMSUNG SM-S918B) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/21.0 Chrome/110.0.5481.154 Mobile Safari/537.36';
         $result = $parser->parse($agent);
 
-        $this->assertSame($result->isMobile(), true);
+        $this->assertTrue($result->isSamsungBrowser());
+        $this->assertFalse($result->isChrome());
+        $this->assertTrue($result->isMobile());
+        $this->assertTrue($result->isAndroid());
+    }
+
+    public function test_brave_family()
+    {
+        $parser = $this->app->make('browser-detect');
+        $agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Brave Chrome/116.0.0.0 Safari/537.36';
+        $result = $parser->parse($agent);
+
+        $this->assertTrue($result->isBrave());
+        $this->assertFalse($result->isChrome());
+        $this->assertTrue($result->isWindows());
+        $this->assertTrue($result->isDesktop());
+    }
+
+    public function test_vivaldi_family()
+    {
+        $parser = $this->app->make('browser-detect');
+        $agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Vivaldi/6.1.3035.84';
+        $result = $parser->parse($agent);
+
+        $this->assertTrue($result->isVivaldi());
+        $this->assertFalse($result->isChrome());
+        $this->assertTrue($result->isWindows());
+    }
+
+    public function test_duck_duck_go_family()
+    {
+        $parser = $this->app->make('browser-detect');
+        $agent = 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 DuckDuckGo/7 Safari/605.1.15';
+        $result = $parser->parse($agent);
+
+        $this->assertTrue($result->isDuckDuckGo());
+        $this->assertFalse($result->isChrome());
+        $this->assertFalse($result->isSafari());
+        $this->assertTrue($result->isiOS());
+        $this->assertTrue($result->isMobile());
     }
 
     public function test_windows()
@@ -334,8 +406,9 @@ class ResultTest extends TestCase
         $agent = 'Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148';
         $result = $parser->parse($agent);
 
-        $this->assertSame($result->platformFamily(), 'iOS');
-        $this->assertSame($result->isMac(), true);
+        $this->assertSame('iOS', $result->platformFamily());
+        $this->assertTrue($result->isiOS());
+        $this->assertFalse($result->isMac());
     }
 
     public function test_mac()
@@ -413,5 +486,106 @@ class ResultTest extends TestCase
         ]);
 
         $this->assertFalse($result->isIEVersion(6, '='));
+    }
+
+    public function test_device_type_tv()
+    {
+        $result = new Result(['isTV' => true]);
+        $this->assertSame('TV', $result->deviceType());
+    }
+
+    public function test_device_type_console()
+    {
+        $result = new Result(['isConsole' => true]);
+        $this->assertSame('Console', $result->deviceType());
+    }
+
+    public function test_device_type_wearable()
+    {
+        $result = new Result(['isWearable' => true]);
+        $this->assertSame('Wearable', $result->deviceType());
+    }
+
+    public function test_device_type_tv_priority()
+    {
+        // TV takes priority over Desktop (TV devices also get isDesktop from BrowserDetect stage)
+        $result = new Result(['isTV' => true, 'isDesktop' => true]);
+        $this->assertSame('TV', $result->deviceType());
+    }
+
+    public function test_i_pad_returns_ios_not_mac()
+    {
+        $parser = $this->app->make('browser-detect');
+        $agent = 'Mozilla/5.0 (iPad; CPU OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1';
+        $result = $parser->parse($agent);
+
+        $this->assertSame('iPadOS', $result->platformFamily());
+        $this->assertTrue($result->isiOS());
+        $this->assertFalse($result->isMac());
+        $this->assertTrue($result->isTablet());
+    }
+
+    public function test_chrome_os()
+    {
+        $parser = $this->app->make('browser-detect');
+        $agent = 'Mozilla/5.0 (X11; CrOS x86_64 14541.0.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36';
+        $result = $parser->parse($agent);
+
+        $this->assertSame('Chrome OS', $result->platformFamily());
+        $this->assertTrue($result->isChromeOS());
+        $this->assertFalse($result->isLinux());
+    }
+
+    public function test_harmony_os()
+    {
+        $parser = $this->app->make('browser-detect');
+        $agent = 'Mozilla/5.0 (Linux; Android 10; HarmonyOS; ALN-AL10; HMSCore 6.11.0.302) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.88 HuaweiBrowser/13.0.4.302 Mobile Safari/537.36';
+        $result = $parser->parse($agent);
+
+        $this->assertTrue($result->isHarmonyOS());
+        $this->assertFalse($result->isAndroid());
+        $this->assertFalse($result->isLinux());
+        $this->assertTrue($result->isMobile());
+    }
+
+    public function test_smart_tv_integration()
+    {
+        $parser = $this->app->make('browser-detect');
+        $agent = 'Mozilla/5.0 (SMART-TV; LINUX; Tizen 5.0) AppleWebKit/537.36 (KHTML, like Gecko) Version/5.0 TV Safari/537.36';
+        $result = $parser->parse($agent);
+
+        $this->assertTrue($result->isTV());
+        $this->assertSame('TV', $result->deviceType());
+    }
+
+    public function test_game_console_integration()
+    {
+        $parser = $this->app->make('browser-detect');
+        $agent = 'Mozilla/5.0 (PlayStation 5 5.02) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0 Safari/605.1.15';
+        $result = $parser->parse($agent);
+
+        $this->assertTrue($result->isConsole());
+        $this->assertSame('Console', $result->deviceType());
+    }
+
+    public function test_wearable_integration()
+    {
+        $parser = $this->app->make('browser-detect');
+        $agent = 'atc/1.0 watchOS/9.0.0 model/Watch6,2 hwp/t8301 build/20R5332g';
+        $result = $parser->parse($agent);
+
+        $this->assertTrue($result->isWearable());
+        $this->assertSame('Wearable', $result->deviceType());
+    }
+
+    public function test_facebook_in_app_integration()
+    {
+        $parser = $this->app->make('browser-detect');
+        $agent = 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/20A362 [FBAN/FBIOS;FBDV/iPhone14,2;FBMD/iPhone]';
+        $result = $parser->parse($agent);
+
+        $this->assertTrue($result->isInApp());
+        $this->assertTrue($result->isiOS());
+        $this->assertTrue($result->isMobile());
     }
 }

@@ -40,6 +40,21 @@ class Result implements ResultInterface
     /**
      * @var bool
      */
+    protected $isTV = false;
+
+    /**
+     * @var bool
+     */
+    protected $isConsole = false;
+
+    /**
+     * @var bool
+     */
+    protected $isWearable = false;
+
+    /**
+     * @var bool
+     */
     protected $isChrome = false;
 
     /**
@@ -61,6 +76,31 @@ class Result implements ResultInterface
      * @var bool
      */
     protected $isEdge = false;
+
+    /**
+     * @var bool
+     */
+    protected $isBrave = false;
+
+    /**
+     * @var bool
+     */
+    protected $isVivaldi = false;
+
+    /**
+     * @var bool
+     */
+    protected $isSamsungBrowser = false;
+
+    /**
+     * @var bool
+     */
+    protected $isArc = false;
+
+    /**
+     * @var bool
+     */
+    protected $isDuckDuckGo = false;
 
     /**
      * @var bool
@@ -155,6 +195,21 @@ class Result implements ResultInterface
     /**
      * @var bool
      */
+    protected $isiOS = false;
+
+    /**
+     * @var bool
+     */
+    protected $isChromeOS = false;
+
+    /**
+     * @var bool
+     */
+    protected $isHarmonyOS = false;
+
+    /**
+     * @var bool
+     */
     protected $isAndroid = false;
 
     /**
@@ -220,6 +275,30 @@ class Result implements ResultInterface
     /**
      * {@inheritdoc}
      */
+    public function isTV(): bool
+    {
+        return $this->isTV;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isConsole(): bool
+    {
+        return $this->isConsole;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isWearable(): bool
+    {
+        return $this->isWearable;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function deviceType(): string
     {
         if ($this->isMobile) {
@@ -227,6 +306,15 @@ class Result implements ResultInterface
         }
         if ($this->isTablet) {
             return 'Tablet';
+        }
+        if ($this->isTV) {
+            return 'TV';
+        }
+        if ($this->isConsole) {
+            return 'Console';
+        }
+        if ($this->isWearable) {
+            return 'Wearable';
         }
         if ($this->isBot) {
             return 'Bot';
@@ -276,6 +364,46 @@ class Result implements ResultInterface
     public function isEdge(): bool
     {
         return $this->isEdge;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isBrave(): bool
+    {
+        return $this->isBrave;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isVivaldi(): bool
+    {
+        return $this->isVivaldi;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isSamsungBrowser(): bool
+    {
+        return $this->isSamsungBrowser;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isArc(): bool
+    {
+        return $this->isArc;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isDuckDuckGo(): bool
+    {
+        return $this->isDuckDuckGo;
     }
 
     /**
@@ -420,6 +548,30 @@ class Result implements ResultInterface
     public function isMac(): bool
     {
         return $this->isMac;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isiOS(): bool
+    {
+        return $this->isiOS;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isChromeOS(): bool
+    {
+        return $this->isChromeOS;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isHarmonyOS(): bool
+    {
+        return $this->isHarmonyOS;
     }
 
     /**

@@ -37,7 +37,7 @@ interface ResultInterface extends JsonSerializable
     public function isDesktop(): bool;
 
     /**
-     * What type of device is this: Mobile, Tablet, Desktop, Bot
+     * What type of device is this: Mobile, Tablet, Desktop, Bot, TV, Console, Wearable
      */
     public function deviceType(): string;
 
@@ -45,6 +45,21 @@ interface ResultInterface extends JsonSerializable
      * Is this a crawler / bot?
      */
     public function isBot(): bool;
+
+    /**
+     * Is this a TV device?
+     */
+    public function isTV(): bool;
+
+    /**
+     * Is this a game console?
+     */
+    public function isConsole(): bool;
+
+    /**
+     * Is this a wearable device?
+     */
+    public function isWearable(): bool;
 
     /**
      * Is this a Chrome or Chromium browser?
@@ -77,7 +92,32 @@ interface ResultInterface extends JsonSerializable
     public function isIE(): bool;
 
     /**
-     * Is this browser an android in-app browser?
+     * Is this a Brave browser?
+     */
+    public function isBrave(): bool;
+
+    /**
+     * Is this a Vivaldi browser?
+     */
+    public function isVivaldi(): bool;
+
+    /**
+     * Is this a Samsung Internet browser?
+     */
+    public function isSamsungBrowser(): bool;
+
+    /**
+     * Is this an Arc browser?
+     */
+    public function isArc(): bool;
+
+    /**
+     * Is this a DuckDuckGo browser?
+     */
+    public function isDuckDuckGo(): bool;
+
+    /**
+     * Is this an in-app browser?
      */
     public function isInApp(): bool;
 
@@ -165,6 +205,21 @@ interface ResultInterface extends JsonSerializable
      * Is this a Mac operating system?
      */
     public function isMac(): bool;
+
+    /**
+     * Is this an iOS operating system?
+     */
+    public function isiOS(): bool;
+
+    /**
+     * Is this Chrome OS?
+     */
+    public function isChromeOS(): bool;
+
+    /**
+     * Is this HarmonyOS?
+     */
+    public function isHarmonyOS(): bool;
 
     /**
      * Is this an android operating system?
