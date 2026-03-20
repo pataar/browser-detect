@@ -19,6 +19,10 @@ class MobileDetect implements StageInterface
      */
     public function __invoke(PayloadInterface $payload): PayloadInterface
     {
+        if ($payload->getValue('isBot')) {
+            return $payload;
+        }
+
         $result = new Mobile_Detect();
         $result->setHttpHeaders(['HTTP_FAKE_HEADER' => 'Mobile\Detect\Header']);
         $result->setUserAgent($payload->getAgent());

@@ -13,6 +13,8 @@ use hisorange\BrowserDetect\Contracts\PayloadInterface;
  */
 class UAParser implements StageInterface
 {
+    protected ?Parser $parser = null;
+
     /**
      * @throws \UAParser\Exception\FileNotFoundException
      *
@@ -21,8 +23,8 @@ class UAParser implements StageInterface
      */
     public function __invoke(PayloadInterface $payload): PayloadInterface
     {
-        $parser = Parser::create();
-        $result = $parser->parse($payload->getAgent());
+        $this->parser ??= Parser::create();
+        $result = $this->parser->parse($payload->getAgent());
 
         if ($result->ua->family !== 'Other') {
             $payload->setValue('browserFamily', (string) $result->ua->family);
