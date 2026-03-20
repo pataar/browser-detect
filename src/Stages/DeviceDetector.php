@@ -21,9 +21,11 @@ class DeviceDetector implements StageInterface
      */
     public function __invoke(PayloadInterface $payload): PayloadInterface
     {
-        $this->detector ??= new \DeviceDetector\DeviceDetector();
-        // Skip bot detection — CrawlerDetect handles that upstream.
-        $this->detector->skipBotDetection(true);
+        if ($this->detector === null) {
+            $this->detector = new \DeviceDetector\DeviceDetector();
+            // Skip bot detection — CrawlerDetect handles that upstream.
+            $this->detector->skipBotDetection(true);
+        }
         $this->detector->setUserAgent($payload->getAgent());
         $this->detector->parse();
 
@@ -62,28 +64,26 @@ class DeviceDetector implements StageInterface
 
         // Skip device-type classification for bots — they don't have meaningful device info.
         if (! $payload->getValue('isBot')) {
-            $device = [
-                'type'  => $detector->getDeviceName(),
-                'brand' => $detector->getBrand(),
-                'model' => $detector->getModel(),
-            ];
+            $deviceType = $detector->getDeviceName();
 
-            if (! empty($device['type'])) {
-                if ($device['type'] === 'desktop') {
+            if (! empty($deviceType)) {
+                if ($deviceType === 'desktop') {
                     $payload->setValue('isDesktop', true);
-                } elseif ($device['type'] === 'tablet') {
+                } elseif ($deviceType === 'tablet') {
                     $payload->setValue('isTablet', true);
-                } elseif ($device['type'] === 'smartphone' || $device['type'] === 'feature phone' || $device['type'] === 'phablet') {
+                } elseif ($deviceType === 'smartphone' || $deviceType === 'feature phone' || $deviceType === 'phablet') {
                     $payload->setValue('isMobile', true);
                 }
             }
 
-            if (! empty($device['brand'])) {
-                $payload->setValue('deviceFamily', AbstractDeviceParser::getFullName($device['brand']));
+            $brand = $detector->getBrand();
+            if (! empty($brand)) {
+                $payload->setValue('deviceFamily', AbstractDeviceParser::getFullName($brand));
             }
 
-            if (! empty($device['model'])) {
-                $payload->setValue('deviceModel', $device['model']);
+            $model = $detector->getModel();
+            if (! empty($model)) {
+                $payload->setValue('deviceModel', $model);
             }
         }
 
@@ -95,23 +95,17 @@ class DeviceDetector implements StageInterface
      *
      * @param  string $version
      * @param  string $prefix
-     * @return array<string, int|string>
+     * @return array<string, int>
      */
     protected function parseVersion(string $version, string $prefix): array
     {
         $response = [];
 
         if (preg_match('%(?<major>\d+)((\.(?<minor>\d+)((\.(?<patch>\d+))|$))|$)%', $version, $match)) {
-            $pieces = [];
-
             foreach ($match as $key => $value) {
                 if ($key === 'major' || $key === 'minor' || $key === 'patch') {
-                    $pieces[] = $response[$prefix . 'Version' . ucfirst($key)] = (int) $value;
+                    $response[$prefix . 'Version' . ucfirst($key)] = (int) $value;
                 }
-            }
-
-            if (! empty($pieces)) {
-                $response[$prefix . 'Version'] = implode('.', $pieces);
             }
         }
 

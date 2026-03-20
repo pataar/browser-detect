@@ -13,6 +13,15 @@ use hisorange\BrowserDetect\Contracts\StageInterface;
 class BrowserDetect implements StageInterface
 {
     /**
+     * @var list<string>
+     */
+    protected const IN_APP_TOKENS = [
+        'MicroMessenger',
+        'Twitter',
+        'WebView',
+    ];
+
+    /**
      * @param  PayloadInterface $payload
      * @return PayloadInterface
      */
@@ -21,18 +30,14 @@ class BrowserDetect implements StageInterface
         $agent = $payload->getAgent();
 
         // Resolve conflicting device type flags into a single type.
-        if (!$payload->getValue('isMobile') && !$payload->getValue('isTablet')) {
+        if ($payload->getValue('isTablet')) {
             $payload->setValue('isMobile', false);
+            $payload->setValue('isDesktop', false);
+        } elseif ($payload->getValue('isMobile')) {
             $payload->setValue('isTablet', false);
-            $payload->setValue('isDesktop', true);
-        } elseif ($payload->getValue('isTablet')) {
-            $payload->setValue('isMobile', false);
-            $payload->setValue('isTablet', true);
             $payload->setValue('isDesktop', false);
         } else {
-            $payload->setValue('isMobile', true);
-            $payload->setValue('isTablet', false);
-            $payload->setValue('isDesktop', false);
+            $payload->setValue('isDesktop', true);
         }
 
         // Prerender bot checker
@@ -59,11 +64,7 @@ class BrowserDetect implements StageInterface
             $payload->setValue('isOpera', true);
         } elseif (false !== stripos($browserFamily, 'safari')) {
             $payload->setValue('isSafari', true);
-        } elseif (
-            false !== stripos($browserFamily, 'explorer')
-            || false !== stripos($browserFamily, 'ie')
-            || false !== stripos($browserFamily, 'trident')
-        ) {
+        } elseif (preg_match('/explorer|\bie\b|trident/i', $browserFamily)) {
             $payload->setValue('isIE', true);
         } elseif (false !== stripos($browserFamily, 'edge')) {
             $payload->setValue('isEdge', true);
@@ -89,7 +90,7 @@ class BrowserDetect implements StageInterface
         }
 
         # Request: https://github.com/hisorange/browser-detect/issues/156
-        $payload->setValue('isInApp', $this->detectIsInApp($payload));
+        $payload->setValue('isInApp', $this->detectIsInApp($agent));
 
         return $payload;
     }
@@ -112,31 +113,20 @@ class BrowserDetect implements StageInterface
     /**
      * Code snippet based on https://github.com/f2etw/detect-inapp/blob/master/src/inapp.js#L38-L47
      */
-    protected function detectIsInApp(PayloadInterface $payload): bool
+    protected function detectIsInApp(string $agent): bool
     {
-        $agent = $payload->getAgent();
-
-        // Simple WebView match
-        if (stripos($agent, 'WebView') !== false) {
-            return true;
+        foreach (self::IN_APP_TOKENS as $token) {
+            if (stripos($agent, $token) !== false) {
+                return true;
+            }
         }
 
-        // Twitter
-        if (stripos($agent, 'Twitter') !== false) {
-            return true;
-        }
-
-        // WeChat
-        if (stripos($agent, 'MicroMessenger') !== false) {
-            return true;
-        }
-
-        // Apple
+        // Apple in-app: iOS device without Safari in the UA
         if (preg_match('%(iPhone|iPod|iPad)(?!.*Safari\/)%i', $agent)) {
             return true;
         }
 
-        // Android
+        // Android WebView marker
         if (preg_match('%Android.*wv%i', $agent)) {
             return true;
         }
