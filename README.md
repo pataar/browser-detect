@@ -2,10 +2,11 @@
 
 [![Latest Stable Version](https://poser.pugx.org/pataar/browser-detect/v/stable)](https://packagist.org/packages/pataar/browser-detect)
 [![Build](https://github.com/pataar/browser-detect/actions/workflows/tests.yml/badge.svg?branch=stable)](https://github.com/pataar/browser-detect/actions/workflows/tests.yml)
+[![PHPStan](https://github.com/pataar/browser-detect/actions/workflows/static-analysis.yml/badge.svg?branch=stable)](https://github.com/pataar/browser-detect/actions/workflows/static-analysis.yml)
 [![Total Downloads](https://poser.pugx.org/pataar/browser-detect/downloads)](https://packagist.org/packages/pataar/browser-detect)
 [![License](https://poser.pugx.org/pataar/browser-detect/license)](https://packagist.org/packages/pataar/browser-detect)
 
-A Laravel package to identify the visitor's browser, operating system, and device type. Results are powered by four well-tested detection libraries — no magic involved.
+A Laravel package to identify the visitor's browser, operating system, and device type. Results are powered by two well-tested detection libraries — no magic involved.
 
 > **Fork notice:** This is a maintained fork of [hisorange/browser-detect](https://github.com/hisorange/browser-detect) by [Varga Zsolt](https://github.com/hisorange), which appears to be abandoned. Full credit to the original author for the design and initial implementation. This fork keeps the package compatible with modern PHP and Laravel versions.
 
@@ -174,10 +175,8 @@ This package aims for 100% test coverage and PHPStan level `max` with zero basel
 This package was originally created by [Varga Zsolt (hisorange)](https://github.com/hisorange). This fork is maintained by [Pieter Willekens (pataar)](https://github.com/pataar).
 
 Detection is powered by:
-- [ua-parser/uap-php](https://github.com/ua-parser/uap-php) — Browser and OS extraction
-- [mobiledetect/mobiledetectlib](https://github.com/serbanghita/Mobile-Detect) — Mobile and tablet detection
 - [jaybizzle/crawler-detect](https://github.com/JayBizzle/Crawler-Detect) — Bot and crawler detection
-- [matomo/device-detector](https://github.com/matomo-org/device-detector) — Comprehensive device parsing
+- [matomo/device-detector](https://github.com/matomo-org/device-detector) — Comprehensive device, browser, and OS parsing
 
 ## License
 
