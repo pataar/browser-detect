@@ -55,8 +55,8 @@ jobs:
       - name: Run test suites
         run: composer run-script ${{ matrix.coverage && 'test-with-coverage' || 'test' }}
 
-      - name: Coveralls
+      - name: Upload coverage to Coveralls
         if: matrix.coverage
-        env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: php vendor/bin/php-coveralls -v --coverage_clover=build/logs/clover.xml
+        uses: coverallsapp/github-action@v2
+        with:
+          file: build/logs/clover.xml
