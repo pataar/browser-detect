@@ -224,11 +224,19 @@ class Result implements ResultInterface
      */
     public function deviceType(): string
     {
-        foreach (['Mobile', 'Tablet', 'Bot', 'Desktop'] as $deviceType) {
-            if ($this->{'is' . $deviceType}()) {
-                return $deviceType;
-            }
+        if ($this->isMobile) {
+            return 'Mobile';
         }
+        if ($this->isTablet) {
+            return 'Tablet';
+        }
+        if ($this->isBot) {
+            return 'Bot';
+        }
+        if ($this->isDesktop) {
+            return 'Desktop';
+        }
+
         return 'Unknown';
     }
 
