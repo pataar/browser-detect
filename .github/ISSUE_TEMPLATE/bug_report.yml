@@ -1,0 +1,42 @@
+name: Bug Report
+description: Report incorrect detection or unexpected behaviour
+labels: ["bug"]
+body:
+  - type: input
+    id: ua
+    attributes:
+      label: User agent string
+      description: The full user agent that produces wrong results.
+      placeholder: "Mozilla/5.0 (..."
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+      description: What should the detection result be?
+      placeholder: "isMobile() should return true"
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behaviour
+      description: What does the package return instead?
+      placeholder: "isMobile() returns false, isDesktop() returns true"
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Package version
+      placeholder: "5.3.0"
+    validations:
+      required: true
+  - type: input
+    id: php
+    attributes:
+      label: PHP version
+      placeholder: "8.3"
+    validations:
+      required: false
