@@ -12,17 +12,19 @@ use hisorange\BrowserDetect\Contracts\PayloadInterface;
  */
 class CrawlerDetect implements StageInterface
 {
+    protected ?\Jaybizzle\CrawlerDetect\CrawlerDetect $crawler = null;
+
     /**
      * @param  PayloadInterface $payload
      * @return PayloadInterface
      */
     public function __invoke(PayloadInterface $payload): PayloadInterface
     {
-        $crawler          = new \Jaybizzle\CrawlerDetect\CrawlerDetect(
-            ['HTTP_FAKE_HEADER' => 'Crawler\Detect'],
-            $payload->getAgent()
+        $this->crawler ??= new \Jaybizzle\CrawlerDetect\CrawlerDetect(
+            ['HTTP_FAKE_HEADER' => 'Crawler\Detect']
         );
-        $payload->setValue('isBot', $crawler->isCrawler());
+        $this->crawler->setUserAgent($payload->getAgent());
+        $payload->setValue('isBot', $this->crawler->isCrawler());
 
         return $payload;
     }

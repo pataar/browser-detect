@@ -168,6 +168,38 @@ class BrowserDetectTest extends TestCase
         $this->assertFalse($result->isInApp());
     }
 
+    public function testBotIsNotDesktop()
+    {
+        $stage   = new BrowserDetect;
+        $payload = new Payload('Googlebot/2.1 (+http://www.google.com/bot.html)');
+        $payload->setValue('isBot', true);
+
+        $payload = $stage($payload);
+        $result  = new Result($payload->toArray());
+
+        $this->assertTrue($result->isBot());
+        $this->assertFalse($result->isDesktop());
+        $this->assertFalse($result->isMobile());
+        $this->assertFalse($result->isTablet());
+        $this->assertSame('Bot', $result->deviceType());
+    }
+
+    public function testMobileBotStaysMobile()
+    {
+        $stage   = new BrowserDetect;
+        $payload = new Payload('Googlebot-Mobile');
+        $payload->setValue('isBot', true);
+        $payload->setValue('isMobile', true);
+
+        $payload = $stage($payload);
+        $result  = new Result($payload->toArray());
+
+        $this->assertTrue($result->isBot());
+        $this->assertTrue($result->isMobile());
+        $this->assertFalse($result->isDesktop());
+        $this->assertFalse($result->isTablet());
+    }
+
     public function testNullBrowserFamilyDoesNotSetAnyBrowserFlag()
     {
         $stage   = new BrowserDetect;
@@ -286,6 +318,20 @@ class BrowserDetectTest extends TestCase
                 ],
                 [
                     'isDesktop' => true,
+                    'isTablet'  => false,
+                    'isMobile'  => false,
+                ],
+            ],
+            // Bot without mobile/tablet should NOT be marked as desktop
+            [
+                [
+                    'isBot'     => true,
+                    'isDesktop' => false,
+                    'isTablet'  => false,
+                    'isMobile'  => false,
+                ],
+                [
+                    'isDesktop' => false,
                     'isTablet'  => false,
                     'isMobile'  => false,
                 ],

@@ -68,21 +68,21 @@ interface ResultInterface extends JsonSerializable
     public function isChrome(): bool;
 
     /**
-     * Is this a Chrome or Chromium browser?
+     * Is this a Firefox browser?
      *
      * @return bool
      */
     public function isFirefox(): bool;
 
     /**
-     * Is this a Chrome or Chromium browser?
+     * Is this an Opera browser?
      *
      * @return bool
      */
     public function isOpera(): bool;
 
     /**
-     * Is this a Chrome or Chromium browser?
+     * Is this a Safari browser?
      *
      * @return bool
      */

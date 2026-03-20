@@ -44,11 +44,7 @@ class Payload implements PayloadInterface
      */
     public function getValue(string $key)
     {
-        if (array_key_exists($key, $this->store)) {
-            return $this->store[$key];
-        } else {
-            return null;
-        }
+        return $this->store[$key] ?? null;
     }
 
     /**

@@ -157,6 +157,21 @@ class ParserTest extends TestCase
     }
 
     /**
+     * @covers ::parse()
+     */
+    public function testBotIsNotDesktop()
+    {
+        $parser = $this->getParser();
+        $result = $parser->parse('Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)');
+
+        $this->assertTrue($result->isBot());
+        $this->assertFalse($result->isDesktop());
+        $this->assertFalse($result->isMobile());
+        $this->assertFalse($result->isTablet());
+        $this->assertSame('Bot', $result->deviceType());
+    }
+
+    /**
      * @covers ::detect()
      */
     public function testDetectTruncatesLongUserAgent()

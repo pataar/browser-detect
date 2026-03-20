@@ -40,26 +40,10 @@ class ServiceProvider extends BaseServiceProvider
      */
     protected function registerDirectives(): void
     {
-        Blade::if(
-            'desktop',
-            function () {
-                return app()->make('browser-detect')->detect()->isDesktop();
-            }
-        );
-
-        Blade::if(
-            'tablet',
-            function () {
-                return app()->make('browser-detect')->detect()->isTablet();
-            }
-        );
-
-        Blade::if(
-            'mobile',
-            function () {
-                return app()->make('browser-detect')->detect()->isMobile();
-            }
-        );
+        foreach (['desktop', 'tablet', 'mobile'] as $directive) {
+            $method = 'is' . ucfirst($directive);
+            Blade::if($directive, fn () => app()->make('browser-detect')->detect()->$method());
+        }
 
         Blade::if(
             'browser',

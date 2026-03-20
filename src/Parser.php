@@ -205,7 +205,7 @@ final class Parser implements ParserInterface
      */
     protected function makeHashKey(string $agent): string
     {
-        return $this->config['cache']['prefix'] . crc32($agent);
+        return $this->config['cache']['prefix'] . hash('xxh128', $agent);
     }
 
     /**

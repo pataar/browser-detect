@@ -13,6 +13,8 @@ use hisorange\BrowserDetect\Contracts\PayloadInterface;
  */
 class MobileDetect implements StageInterface
 {
+    protected ?Mobile_Detect $detector = null;
+
     /**
      * @param  PayloadInterface $payload
      * @return PayloadInterface
@@ -23,7 +25,8 @@ class MobileDetect implements StageInterface
             return $payload;
         }
 
-        $result = new Mobile_Detect();
+        $this->detector ??= new Mobile_Detect();
+        $result = $this->detector;
         $result->setHttpHeaders(['HTTP_FAKE_HEADER' => 'Mobile\Detect\Header']);
         $result->setUserAgent($payload->getAgent());
 
