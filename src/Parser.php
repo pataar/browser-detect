@@ -41,6 +41,13 @@ final class Parser implements ParserInterface
     protected $config;
 
     /**
+     * Reusable pipeline stages.
+     *
+     * @var StageInterface[]
+     */
+    protected $pipeline;
+
+    /**
      * Singleton used in standalone mode.
      *
      * @var self|null
@@ -70,6 +77,14 @@ final class Parser implements ParserInterface
         );
 
         $this->runtime = [];
+
+        $this->pipeline = [
+            new Stages\CrawlerDetect(),
+            new Stages\UAParser(),
+            new Stages\MobileDetect(),
+            new Stages\DeviceDetector(),
+            new Stages\BrowserDetect(),
+        ];
     }
 
     /**
@@ -190,7 +205,7 @@ final class Parser implements ParserInterface
      */
     protected function makeHashKey(string $agent): string
     {
-        return $this->config['cache']['prefix'] . md5($agent);
+        return $this->config['cache']['prefix'] . crc32($agent);
     }
 
     /**
@@ -201,20 +216,12 @@ final class Parser implements ParserInterface
      */
     protected function process(string $agent): ResultInterface
     {
-		$pipeline = [
-			new Stages\UAParser(),
-			new Stages\MobileDetect(),
-			new Stages\CrawlerDetect(),
-			new Stages\DeviceDetector(),
-			new Stages\BrowserDetect()
-		];
+        $payload = array_reduce(
+            $this->pipeline,
+            fn(Payload $carry, StageInterface $stage) => $stage($carry),
+            new Payload($agent)
+        );
 
-		$payload = array_reduce(
-			$pipeline,
-			fn(Payload $carry, StageInterface $stage) => $stage($carry),
-			new Payload($agent)
-		);
-
-		return new Result($payload->toArray());
+        return new Result($payload->toArray());
     }
 }

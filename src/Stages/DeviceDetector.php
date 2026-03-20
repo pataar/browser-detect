@@ -13,6 +13,8 @@ use hisorange\BrowserDetect\Contracts\PayloadInterface;
  */
 class DeviceDetector implements StageInterface
 {
+    protected ?\DeviceDetector\DeviceDetector $detector = null;
+
     /**
      * @param  PayloadInterface $payload
      * @return PayloadInterface
@@ -21,10 +23,12 @@ class DeviceDetector implements StageInterface
     {
         // Skipping on bots, the detector is set to ignore bot details.
         if (! $payload->getValue('isBot')) {
-            $detector = new \DeviceDetector\DeviceDetector();
-            $detector->setUserAgent($payload->getAgent());
-            $detector->skipBotDetection(true);
-            $detector->parse();
+            $this->detector ??= new \DeviceDetector\DeviceDetector();
+            $this->detector->setUserAgent($payload->getAgent());
+            $this->detector->skipBotDetection(true);
+            $this->detector->parse();
+
+            $detector = $this->detector;
 
             $platform = $detector->getOs();
             $browser  = $detector->getClient();
