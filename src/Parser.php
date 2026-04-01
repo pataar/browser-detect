@@ -14,6 +14,9 @@ use Illuminate\Http\Request;
  */
 final class Parser implements ParserInterface
 {
+    // Bump this to invalidate all cached results (e.g. after changing the serialization format).
+    private const CACHE_VERSION = 1;
+
     /**
      * @var CacheManager|null
      */
@@ -195,7 +198,7 @@ final class Parser implements ParserInterface
      */
     protected function makeHashKey(string $agent): string
     {
-        return $this->cacheConfig()['prefix'].hash('xxh128', $agent);
+        return $this->cacheConfig()['prefix'].self::CACHE_VERSION.'_'.hash('xxh128', $agent);
     }
 
     /**
