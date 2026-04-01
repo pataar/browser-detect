@@ -14,6 +14,9 @@ use Illuminate\Http\Request;
  */
 final class Parser implements ParserInterface
 {
+    // Bump this to invalidate all cached results (e.g. after changing the serialization format).
+    private const CACHE_VERSION = 1;
+
     /**
      * @var CacheManager|null
      */
@@ -171,12 +174,15 @@ final class Parser implements ParserInterface
         if (! isset($this->runtime[$key])) {
             // In standalone mode, You can run the parser without a cache.
             if ($this->cache !== null) {
-                /** @var ResultInterface $result */
-                $result = $this->cache->remember(
+                // Cache the plain array to avoid __PHP_Incomplete_Class on deserialization.
+                /** @var array<string, mixed> $data */
+                $data = $this->cache->remember(
                     $key,
                     $this->cacheConfig()['interval'],
-                    fn () => $this->process($agent)
+                    fn () => $this->process($agent)->toArray()
                 );
+
+                $result = new Result($data);
             } else {
                 $result = $this->process($agent);
             }
@@ -192,7 +198,7 @@ final class Parser implements ParserInterface
      */
     protected function makeHashKey(string $agent): string
     {
-        return $this->cacheConfig()['prefix'].hash('xxh128', $agent);
+        return $this->cacheConfig()['prefix'].self::CACHE_VERSION.'_'.hash('xxh128', $agent);
     }
 
     /**
