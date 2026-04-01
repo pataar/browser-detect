@@ -177,4 +177,27 @@ class ParserTest extends TestCase
 
         $this->assertSame(10, strlen($result->userAgent()));
     }
+
+    /**
+     * Regression test for GitHub issue #16.
+     * Ensures cached results don't produce __PHP_Incomplete_Class errors.
+     *
+     * @covers ::parse()
+     */
+    public function test_cache_returns_result_interface_not_incomplete_class()
+    {
+        $parser = $this->getParser();
+        $agent = 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:149.0) Gecko/20100101 Firefox/149.0';
+
+        // First call populates the cache.
+        $first = $parser->parse($agent);
+        $this->assertInstanceOf(ResultInterface::class, $first);
+
+        // Create a new parser instance (no runtime cache) to force reading from the application cache.
+        $freshParser = $this->getParser();
+        $second = $freshParser->parse($agent);
+
+        $this->assertInstanceOf(ResultInterface::class, $second);
+        $this->assertSame($first->toArray(), $second->toArray());
+    }
 }

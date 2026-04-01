@@ -171,12 +171,15 @@ final class Parser implements ParserInterface
         if (! isset($this->runtime[$key])) {
             // In standalone mode, You can run the parser without a cache.
             if ($this->cache !== null) {
-                /** @var ResultInterface $result */
-                $result = $this->cache->remember(
+                // Cache the plain array to avoid __PHP_Incomplete_Class on deserialization.
+                /** @var array<string, mixed> $data */
+                $data = $this->cache->remember(
                     $key,
                     $this->cacheConfig()['interval'],
-                    fn () => $this->process($agent)
+                    fn () => $this->process($agent)->toArray()
                 );
+
+                $result = new Result($data);
             } else {
                 $result = $this->process($agent);
             }
