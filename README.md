@@ -170,7 +170,7 @@ Available options:
 | :--------------------------- | :-------: | :----------------------------------------------------- |
 | `cache.interval`             |  `10080`  | Cache TTL in seconds                                   |
 | `cache.prefix`               |  `bd4_`   | Cache key prefix                                       |
-| `cache.device-detector`      |  `false`  | Enable matomo/device-detector's internal Laravel cache |
+| `cache.device-detector`      |  `null`   | Cache driver for device-detector's internal cache. See `config/browser-detect.php` for examples. |
 | `security.max-header-length` |  `2048`   | Max user agent length (DoS protection)                 |
 
 ## Quality

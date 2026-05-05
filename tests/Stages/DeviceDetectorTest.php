@@ -2,6 +2,7 @@
 
 namespace hisorange\BrowserDetect\Test\Stages;
 
+use DeviceDetector\Cache\LaravelCache;
 use hisorange\BrowserDetect\Payload;
 use hisorange\BrowserDetect\Stages\DeviceDetector;
 use hisorange\BrowserDetect\Test\TestCase;
@@ -87,7 +88,7 @@ class DeviceDetectorTest extends TestCase
         // Must be called before the stage runs to intercept cache writes.
         Cache::spy();
 
-        $stage = new DeviceDetector(useDeviceDetectorCache: true);
+        $stage = new DeviceDetector(deviceDetectorCache: LaravelCache::class);
         $payload = new Payload('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36');
         $stage($payload);
 

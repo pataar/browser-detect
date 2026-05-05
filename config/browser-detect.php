@@ -11,12 +11,14 @@ return [
          */
         'prefix' => 'bd4_',
         /**
-         * Enable the device-detector engine's own internal cache via Laravel's cache store.
-         * When enabled, parsed YAML device definition data is cached by the underlying
-         * matomo/device-detector library, reducing file reads on repeated parses.
-         * Requires a Laravel application context — do not enable in standalone mode.
+         * Cache driver class for the device-detector engine's internal cache. When null,
+         * the library uses its built-in StaticCache. Override to swap in a different driver.
+         *
+         * Examples:
+         *   \DeviceDetector\Cache\StaticCache::class   — in-process static cache (default)
+         *   \DeviceDetector\Cache\LaravelCache::class  — persists via Laravel's cache store
          */
-        'device-detector' => false,
+        'device-detector' => null,
     ],
     'security' => [
         /**
