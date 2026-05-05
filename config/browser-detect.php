@@ -10,6 +10,13 @@ return [
          * Cache prefix, the user agent string will be hashed and appended at the end.
          */
         'prefix' => 'bd4_',
+        /**
+         * Enable the device-detector engine's own internal cache via Laravel's cache store.
+         * When enabled, parsed YAML device definition data is cached by the underlying
+         * matomo/device-detector library, reducing file reads on repeated parses.
+         * Requires a Laravel application context — do not enable in standalone mode.
+         */
+        'device-detector' => false,
     ],
     'security' => [
         /**

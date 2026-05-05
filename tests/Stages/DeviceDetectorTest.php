@@ -5,6 +5,7 @@ namespace hisorange\BrowserDetect\Test\Stages;
 use hisorange\BrowserDetect\Payload;
 use hisorange\BrowserDetect\Stages\DeviceDetector;
 use hisorange\BrowserDetect\Test\TestCase;
+use Illuminate\Support\Facades\Cache;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
@@ -75,6 +76,24 @@ class DeviceDetectorTest extends TestCase
                 ],
             ],
         ];
+    }
+
+    /**
+     * @covers ::__construct()
+     * @covers ::__invoke()
+     */
+    public function test_invoke_with_device_detector_cache_enabled()
+    {
+        // Must be called before the stage runs to intercept cache writes.
+        Cache::spy();
+
+        $stage = new DeviceDetector(useDeviceDetectorCache: true);
+        $payload = new Payload('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36');
+        $stage($payload);
+
+        $this->assertSame('Blink', $payload->getValue('browserEngine'));
+        $this->assertSame('Chrome', $payload->getValue('browserFamily'));
+        Cache::shouldHaveReceived('put');
     }
 
     /**

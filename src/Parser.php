@@ -81,7 +81,7 @@ final class Parser implements ParserInterface
 
         $this->pipeline = [
             new Stages\CrawlerDetect,
-            new Stages\DeviceDetector,
+            new Stages\DeviceDetector($this->cacheConfig()['device-detector']),
             new Stages\BrowserDetect,
         ];
     }
@@ -202,11 +202,11 @@ final class Parser implements ParserInterface
     }
 
     /**
-     * @return array{interval: int, prefix: string}
+     * @return array{interval: int, prefix: string, device-detector: bool}
      */
     private function cacheConfig(): array
     {
-        /** @var array{interval: int, prefix: string} */
+        /** @var array{interval: int, prefix: string, device-detector: bool} */
         return $this->config['cache'];
     }
 

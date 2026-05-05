@@ -13,12 +13,17 @@ class DeviceDetector implements StageInterface
 {
     protected ?\DeviceDetector\DeviceDetector $detector = null;
 
+    public function __construct(protected bool $useDeviceDetectorCache = false) {}
+
     public function __invoke(PayloadInterface $payload): PayloadInterface
     {
         if ($this->detector === null) {
             $this->detector = new \DeviceDetector\DeviceDetector;
             // Skip bot detection — CrawlerDetect handles that upstream.
             $this->detector->skipBotDetection(true);
+            if ($this->useDeviceDetectorCache) {
+                $this->detector->setCache(new \DeviceDetector\Cache\LaravelCache());
+            }
         }
         $this->detector->setUserAgent($payload->getAgent());
         $this->detector->parse();
