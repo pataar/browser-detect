@@ -85,8 +85,8 @@ class DeviceDetectorTest extends TestCase
      */
     public function test_invoke_with_device_detector_cache_enabled()
     {
-        // Must be called before the stage runs to intercept cache writes.
-        Cache::spy();
+        $spy = \Mockery::spy(Cache::getFacadeRoot())->makePartial();
+        Cache::swap($spy);
 
         $stage = new DeviceDetector(deviceDetectorCache: LaravelCache::class);
         $payload = new Payload('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36');
@@ -94,7 +94,7 @@ class DeviceDetectorTest extends TestCase
 
         $this->assertSame('Blink', $payload->getValue('browserEngine'));
         $this->assertSame('Chrome', $payload->getValue('browserFamily'));
-        Cache::shouldHaveReceived('put');
+        $spy->shouldHaveReceived('put');
     }
 
     /**
