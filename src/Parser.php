@@ -2,6 +2,7 @@
 
 namespace hisorange\BrowserDetect;
 
+use DeviceDetector\Cache\CacheInterface;
 use hisorange\BrowserDetect\Contracts\ParserInterface;
 use hisorange\BrowserDetect\Contracts\ResultInterface;
 use hisorange\BrowserDetect\Contracts\StageInterface;
@@ -81,7 +82,7 @@ final class Parser implements ParserInterface
 
         $this->pipeline = [
             new Stages\CrawlerDetect,
-            new Stages\DeviceDetector,
+            new Stages\DeviceDetector($this->cacheConfig()['device-detector']),
             new Stages\BrowserDetect,
         ];
     }
@@ -202,11 +203,11 @@ final class Parser implements ParserInterface
     }
 
     /**
-     * @return array{interval: int, prefix: string}
+     * @return array{interval: int, prefix: string, device-detector: class-string<CacheInterface>|null}
      */
     private function cacheConfig(): array
     {
-        /** @var array{interval: int, prefix: string} */
+        /** @var array{interval: int, prefix: string, device-detector: class-string<CacheInterface>|null} */
         return $this->config['cache'];
     }
 

@@ -2,6 +2,7 @@
 
 namespace hisorange\BrowserDetect\Stages;
 
+use DeviceDetector\Cache\CacheInterface;
 use DeviceDetector\Parser\Device\AbstractDeviceParser;
 use hisorange\BrowserDetect\Contracts\PayloadInterface;
 use hisorange\BrowserDetect\Contracts\StageInterface;
@@ -13,12 +14,21 @@ class DeviceDetector implements StageInterface
 {
     protected ?\DeviceDetector\DeviceDetector $detector = null;
 
+    /**
+     * @param  class-string<CacheInterface>|null  $deviceDetectorCache
+     */
+    public function __construct(protected ?string $deviceDetectorCache = null) {}
+
     public function __invoke(PayloadInterface $payload): PayloadInterface
     {
         if ($this->detector === null) {
             $this->detector = new \DeviceDetector\DeviceDetector;
             // Skip bot detection — CrawlerDetect handles that upstream.
             $this->detector->skipBotDetection(true);
+            if ($this->deviceDetectorCache !== null) {
+                $cacheClass = $this->deviceDetectorCache;
+                $this->detector->setCache(new $cacheClass);
+            }
         }
         $this->detector->setUserAgent($payload->getAgent());
         $this->detector->parse();

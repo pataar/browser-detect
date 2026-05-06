@@ -166,11 +166,12 @@ $browser = new Parser(null, null, [
 
 Available options:
 
-| Key                          | Default | Description                            |
-| :--------------------------- | :-----: | :------------------------------------- |
-| `cache.interval`             | `10080` | Cache TTL in seconds                   |
-| `cache.prefix`               | `bd4_`  | Cache key prefix                       |
-| `security.max-header-length` | `2048`  | Max user agent length (DoS protection) |
+| Key                          |  Default  | Description                                            |
+| :--------------------------- | :-------: | :----------------------------------------------------- |
+| `cache.interval`             |  `10080`  | Cache TTL in seconds                                   |
+| `cache.prefix`               |  `bd4_`   | Cache key prefix                                       |
+| `cache.device-detector`      |  `null`   | Cache driver for device-detector's internal cache. See `config/browser-detect.php` for examples. |
+| `security.max-header-length` |  `2048`   | Max user agent length (DoS protection)                 |
 
 ## Quality
 
