@@ -20,7 +20,7 @@ jobs:
       fail-fast: false
       matrix:
         php-version: [8.3, 8.4, 8.5]
-        laravel-version: ["11.*", "12.*", "13.*"]
+        laravel-version: ["12.*", "13.*"]
         include:
           - php-version: 8.5
             laravel-version: "13.*"
