@@ -13,13 +13,13 @@ A Laravel package to identify the visitor's browser, operating system, and devic
 
 ### Changes from the original
 
-- PHP 8.3+ and Laravel 11–13 support (dropped older versions)
+- PHP 8.3+ and Laravel 12–13 support (dropped older versions)
 - Removed `ua-parser/ua-parser` and `mobiledetect/mobiledetect` — detection is now powered by fewer, better-maintained libraries
 
 ## Requirements
 
 - PHP 8.3+
-- Laravel 11, 12, or 13 (or standalone without Laravel)
+- Laravel 12 or 13 (or standalone without Laravel)
 
 ## Installation
 
